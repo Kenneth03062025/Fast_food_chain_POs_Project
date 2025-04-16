@@ -1,28 +1,27 @@
 package com.app.controller;
 
 import com.app.model.Response;
-import com.app.service.implementations.OperationServiceImpl;
+import com.app.service.implementations.CasheringServiceImpl;
 
 public class CasheringController {
 
-    public static void createOpration(){
+    static CasheringServiceImpl cImpl = new CasheringServiceImpl();
+
+    public static void createCashering(){
         Response<?> res = new Response<>();
-        OperationServiceImpl impl = new OperationServiceImpl();
-        res = impl.createOperation();
+        res = cImpl.createCashering();
         System.out.println(res.getStatus());
     }
 
     public static void openCashering(){
         Response<?> res = new Response<>();
-        OperationServiceImpl impl = new OperationServiceImpl();
-        res = impl.openCashering("OPR-1000");
+        res = cImpl.openCashering("OPR-1000");
         System.out.println(res.getStatus());
     }
 
     public static void closeCashering(){
         Response<?> res = new Response<>();
-        OperationServiceImpl impl = new OperationServiceImpl();
-        res = impl.closeCashering("OPR-1000");
+        res = cImpl.closeCashering("OPR-1000");
         System.out.println(res.getStatus());
     }
 }

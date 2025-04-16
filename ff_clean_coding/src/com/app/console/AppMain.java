@@ -4,7 +4,7 @@ import com.app.controller.AuthController;
 
 public class AppMain {
     public static void execute() {
-//        ItemConsole.showAllItems();
+//        CasheringConsole.createCahering();
         ItemConsole.getAllItem();
 //        AuthConsole.displayLogInForm();
 //        AuthConsole.displayCreateUserForm();

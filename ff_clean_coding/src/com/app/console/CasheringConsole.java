@@ -1,18 +1,24 @@
 package com.app.console;
 
+import com.app.controller.CasheringController;
+
 import java.util.Scanner;
 
 public class CasheringConsole {
     private final static Scanner sc = new Scanner(System.in);
 
-    public static void getOpenCashering(){}
+    public static void getOpenCashering(){
+        CasheringController.createCashering();
+    }
+
+    public static void createCahering(){
+        CasheringController.createCashering();
+    }
 
     public static void displayCasheringDashboard(){
         System.out.println("What do you want? ");
         System.out.println("    [1] Create New Cashering");
-        System.out.println("    [2] Update Cashering");
-        System.out.println("    [3] View Stock");
-        System.out.println("    [4] Back to dashboard");
+        System.out.println("    [2] Back to dashboard");
         System.out.print("Enter your choice: ");
         String choice = sc.nextLine();
 
