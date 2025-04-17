@@ -31,6 +31,11 @@ public class ItemController {
 
     }
 
+    public static ListOfItemsResponse getActiveItems(){
+        ListOfItemsResponse res = itm.getActiveItems();
+        return res;
+    }
+
     public static Response<?> updateAnItem(String itemNumber,Item item){
         Response<?> res = new Response<>();
 //        ItemServiceImpl itm = new ItemServiceImpl();

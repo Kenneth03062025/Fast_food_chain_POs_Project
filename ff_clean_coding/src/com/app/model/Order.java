@@ -6,22 +6,22 @@ public class Order {
     private int id;
     private String orderNumber;
 
-    private String scheduleNumber;
+    private String casheringNumber;
     private LocalDateTime placeAt;
 
     private String status;
 
-    public Order(int id, String orderNumber, String scheduleNumber, LocalDateTime placeAt, String status) {
+    public Order(int id, String orderNumber, String casheringNumber, LocalDateTime placeAt, String status) {
         this.id = id;
         this.orderNumber = orderNumber;
-        this.scheduleNumber = scheduleNumber;
+        this.casheringNumber = casheringNumber;
         this.placeAt = placeAt;
         this.status = status;
     }
 
     public Order(String orderNumber, String scheduleNumber) {
         this.orderNumber = orderNumber;
-        this.scheduleNumber = scheduleNumber;
+        this.casheringNumber = casheringNumber;
     }
 
     public Order() {
@@ -43,12 +43,12 @@ public class Order {
         this.orderNumber = orderNumber;
     }
 
-    public String getScheduleNumber() {
-        return scheduleNumber;
+    public String getCasheringNumber() {
+        return casheringNumber;
     }
 
-    public void setScheduleNumber(String scheduleNumber) {
-        this.scheduleNumber = scheduleNumber;
+    public void setCasheringNumber(String casheringNumber) {
+        this.casheringNumber = casheringNumber;
     }
 
     public LocalDateTime getPlaceAt() {

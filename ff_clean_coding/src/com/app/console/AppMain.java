@@ -4,8 +4,11 @@ import com.app.controller.AuthController;
 
 public class AppMain {
     public static void execute() {
-//        CasheringConsole.createCahering();
-        ItemConsole.getAllItem();
+        OrderConsole.getUnpaidOrders();
+//        OrderConsole.creatOrder();
+//        CasheringConsole.displayStocks();
+//        ItemConsole.getAllItem();
+//        CasheringConsole.getActiveItems();
 //        AuthConsole.displayLogInForm();
 //        AuthConsole.displayCreateUserForm();
     }

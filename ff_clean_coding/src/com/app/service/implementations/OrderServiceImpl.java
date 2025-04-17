@@ -1,22 +1,26 @@
 package com.app.service.implementations;
 
-import com.app.model.OrderItem;
-import com.app.model.Response;
-import com.app.model.Setup;
+import com.app.model.*;
+import com.app.model.dto.ListOfItemsResponse;
+import com.app.model.dto.ListOfOrdersResponse;
 import com.app.service.interfaces.OrderService;
+import com.app.state.Constants;
 import com.app.util.DBConnection;
 import com.app.util.RiskyFunctionAnyType;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
+import static com.app.util.FunctionWithTryCatch.tryCatchAnyResponseExecute;
 import static com.app.util.FunctionWithTryCatch.tryCatchTransactionalExecute;
 
 public class OrderServiceImpl implements OrderService {
     @Override
-    public Response<?> createOrder(ArrayList<OrderItem> orderItems) {
+    public Response<?> createOrder(ArrayList<OrderItem> orderItems, String casheringNumber) {
         String query1 = "Select identification_prefix,current_number FROM setup WHERE id=?";
         String query2 = "INSERT INTO orders (order_no, cashering_no, placeAt, status)"
                 + "VALUES(?,?,?,?)";
@@ -41,9 +45,11 @@ public class OrderServiceImpl implements OrderService {
                 setup = new Setup(prefix,currentNumber);
             }
 
+            String newNumber = setup.getNewNumber();
+
             PreparedStatement stmt2 = con.getConnection().prepareStatement(query2);
-            stmt2.setString(1,setup.getNewNumber());
-            stmt2.setString(2,"CSH-1001");
+            stmt2.setString(1,newNumber);
+            stmt2.setString(2,casheringNumber);
             stmt2.setString(3, LocalDateTime.now().toString());
             stmt2.setString(4,"created");
             stmt2.executeUpdate();
@@ -66,9 +72,62 @@ public class OrderServiceImpl implements OrderService {
 
             res.setStatus("success");
             res.setMessage("Successfully Saved Payment");
-            res.setData(setup.getNewNumber());
+            res.setDataString(newNumber);
             return res;
         };
         return tryCatchTransactionalExecute(con, func);
     }
+
+    @Override
+    public ListOfOrdersResponse getUnpaidOrders(String casheringNumber) {
+        String query = "SELECT * FROM orders WHERE (status='created' AND cashering_no =?)";
+        DBConnection con = new DBConnection();
+
+        RiskyFunctionAnyType func = () -> {
+            Response<Order> res = new Response<>();
+            List<Order> orders = new ArrayList<>();
+            PreparedStatement preparedStatement;
+            ResultSet resultSet;
+
+            preparedStatement = con.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, casheringNumber);
+            resultSet =  preparedStatement.executeQuery();
+//            System.out.println(resultSet.next());
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt(1);
+                String order_no = resultSet.getString(2);
+                String cashering_no = resultSet.getString(3);
+                LocalDateTime placeAt = LocalDateTime.parse(resultSet.getString(4), Constants.formatter);
+                String status = resultSet.getString(5);
+                Order order = new Order(id,order_no,cashering_no,placeAt,status);
+                System.out.println(id);
+//                Item item = new Item(item_no,item_name,item_description,price,unit);
+                orders.add(order);
+            }
+            System.out.println(orders.size());
+
+            return res = new Response<>("success","Successfully fetch Orders",orders);
+        };
+
+        Response<?> res = tryCatchAnyResponseExecute(con,func);
+//        ListOfItemsResponse itemsResponse = new ListOfItemsResponse();
+        ListOfOrdersResponse ordersResponse = new ListOfOrdersResponse();
+        ordersResponse.setStatus(res.getStatus());
+        ordersResponse.setMessage(res.getMessage());
+        if(res.getStatus().equals("success")){
+            List<Order> orders = new ArrayList<>();
+            //itemsResponse.
+            for (Object obj: res.getListOfItems()) {
+                Order order = (Order) obj;
+                orders.add(order);
+            }
+            ordersResponse.setOrders(orders);
+        }
+
+        return ordersResponse;
+//        return null;
+    }
+
+    //getItemByOrderNumber
 }

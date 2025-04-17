@@ -19,6 +19,7 @@ public class PaymentServiceImpl implements PaymentService {
         String query2 = "INSERT INTO payments (payment_number, order_number, total, createdAt, status)"
                 + "VALUES(?,?,?,?,?)";
         String query3 = "UPDATE setup SET current_number = ? WHERE id=?";
+        String query4 = "UPDATE orders SET status = 'paid' WHERE order_no=?";
         int setupId = 1;
         DBConnection con = new DBConnection();
 
@@ -50,6 +51,9 @@ public class PaymentServiceImpl implements PaymentService {
             stmt3.setInt(1,setup.getNextCurrentNumber());
             stmt3.setInt(2,setupId);
             stmt3.executeUpdate();
+
+            PreparedStatement stmt4 = con.getConnection().prepareStatement(query4);
+            stmt4.setString(1, payment.getOrderNumber());
 
 
             res.setStatus("success");

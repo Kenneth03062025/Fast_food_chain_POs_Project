@@ -20,6 +20,14 @@ public class Item {
         this.status = status;
     }
 
+    public Item(String item_no, String item_name, String item_description, double price, String unit) {
+        this.item_no = item_no;
+        this.item_name = item_name;
+        this.item_description = item_description;
+        this.price = price;
+        this.unit = unit;
+    }
+
     public Item(String item_name, String item_description, double price, String unit) {
         this.item_name = item_name;
         this.item_description = item_description;

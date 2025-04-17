@@ -1,9 +1,6 @@
 package com.app.service.implementations;
 
-import com.app.model.Cashering;
-import com.app.model.Item;
-import com.app.model.Response;
-import com.app.model.Setup;
+import com.app.model.*;
 import com.app.service.interfaces.CasheringService;
 import com.app.util.DBConnection;
 import com.app.util.RiskyFunctionAnyType;
@@ -13,6 +10,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import static com.app.util.FunctionWithTryCatch.tryCatchAnyResponseExecute;
 import static com.app.util.FunctionWithTryCatch.tryCatchTransactionalExecute;
@@ -137,4 +135,32 @@ public class CasheringServiceImpl implements CasheringService {
         return tryCatchAnyResponseExecute(con,func);
 //        return null;
     }
+
+    @Override
+    public Response<?> addItemsToCashering(List<Stocks> stocks) {
+        String query3 = "INSERT INTO order_items (cashering_no,item_no,quantity) VALUES(?,?,?)";
+        DBConnection con = new DBConnection();
+
+        RiskyFunctionAnyType func = () -> {
+
+            Response<String> res = new Response<>();
+
+            PreparedStatement stmt1 = con.getConnection().prepareStatement(query3);
+            for (Stocks ite: stocks) {
+                stmt1.setString(1,ite.getCasheringNumber());
+                stmt1.setString(2,ite.getItemNumber());
+                stmt1.setInt(3,ite.getQuantity());
+                stmt1.addBatch();
+                stmt1.executeUpdate();
+            }
+            res.setStatus("success");
+            res.setMessage("Successfully Items to Cashering");
+//            res.setData(setup.getNewNumber());
+            return res;
+        };
+
+        return tryCatchTransactionalExecute(con, func);
+    }
+
+    //view stocks
 }

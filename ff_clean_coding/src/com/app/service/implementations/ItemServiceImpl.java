@@ -111,6 +111,51 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public ListOfItemsResponse getActiveItems() {
+        String query = "SELECT * FROM items WHERE status='active'";
+        DBConnection con = new DBConnection();
+
+        RiskyFunctionAnyType func = () -> {
+            Response<Item> res = new Response<>();
+            List<Item> items = new ArrayList<>();
+            Statement statement;
+            ResultSet resultSet;
+            statement = con.getConnection().createStatement();
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                int id = resultSet.getInt(1);
+                String item_no = resultSet.getString(2);
+                String item_name = resultSet.getString(3);
+                String item_description = resultSet.getString(4);
+                double price = resultSet.getDouble(5);
+                String unit = resultSet.getString(6);
+                String status = resultSet.getString(7);
+//                Item item = new Item(id, item_no, item_name, item_description, price, unit, status);
+                Item item = new Item(item_no,item_name,item_description,price,unit);
+                items.add(item);
+            }
+
+            return res = new Response<>("success","Successfully fetch Items",items);
+        };
+
+        Response<?> res = tryCatchAnyResponseExecute(con,func);
+        ListOfItemsResponse itemsResponse = new ListOfItemsResponse();
+        itemsResponse.setStatus(res.getStatus());
+        itemsResponse.setMessage(res.getMessage());
+        if(res.getStatus().equals("success")){
+            List<Item> items = new ArrayList<>();
+            //itemsResponse.
+            for (Object obj: res.getListOfItems()) {
+                Item item = (Item) obj;
+                items.add(item);
+            }
+            itemsResponse.setItems(items);
+        }
+
+        return itemsResponse;
+    }
+
+    @Override
     public Response<?> updateItem(String itemNumber, Item item) {
         String query = "UPDATE items SET item_name = ?, item_description = ?, price = ?, unit = ? WHERE item_no=?";
         DBConnection con = new DBConnection();

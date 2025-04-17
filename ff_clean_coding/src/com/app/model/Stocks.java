@@ -4,7 +4,7 @@ public class Stocks {
 
     private int id;
 
-    private String scheduleNumber;
+    private String casheringNumber;
 
     private String itemNumber;
 
@@ -14,21 +14,27 @@ public class Stocks {
 
     private int itemSold;
 
-    public Stocks(int id, String scheduleNumber, String itemNumber, int quantity, int itemSold) {
+    public Stocks(int id, String casheringNumber, String itemNumber, int quantity, int itemSold) {
         this.id = id;
-        this.scheduleNumber = scheduleNumber;
+        this.casheringNumber = casheringNumber;
         this.itemNumber = itemNumber;
         this.quantity = quantity;
         this.itemSold = itemSold;
     }
 
-    public Stocks(int id, String scheduleNumber, String itemNumber, String itemName, int quantity, int itemSold) {
+    public Stocks(int id, String casheringNumber, String itemNumber, String itemName, int quantity, int itemSold) {
         this.id = id;
-        this.scheduleNumber = scheduleNumber;
+        this.casheringNumber = casheringNumber;
         this.itemNumber = itemNumber;
         this.itemName = itemName;
         this.quantity = quantity;
         this.itemSold = itemSold;
+    }
+
+    public Stocks(String casheringNumber, String itemNumber, int quantity) {
+        this.casheringNumber = casheringNumber;
+        this.itemNumber = itemNumber;
+        this.quantity = quantity;
     }
 
     public int getId() {
@@ -39,12 +45,12 @@ public class Stocks {
         this.id = id;
     }
 
-    public String getScheduleNumber() {
-        return scheduleNumber;
+    public String getCasheringNumber() {
+        return casheringNumber;
     }
 
-    public void setScheduleNumber(String scheduleNumber) {
-        this.scheduleNumber = scheduleNumber;
+    public void setCasheringNumber(String scheduleNumber) {
+        this.casheringNumber = casheringNumber;
     }
 
     public String getItemNumber() {
