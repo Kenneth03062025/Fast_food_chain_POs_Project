@@ -196,6 +196,7 @@ public class ItemServiceImpl implements ItemService {
                 double price = resultSet.getDouble(5);
                 String unit = resultSet.getString(6);
                 String status = resultSet.getString(7);
+                System.out.println(id);
 
                 it = new Item(id,item_no,item_name,item_description,price,unit,status);
             }

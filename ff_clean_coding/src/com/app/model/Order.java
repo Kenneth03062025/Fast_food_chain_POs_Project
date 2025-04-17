@@ -19,6 +19,13 @@ public class Order {
         this.status = status;
     }
 
+    public Order(int id, String orderNumber, String casheringNumber, String status) {
+        this.id = id;
+        this.orderNumber = orderNumber;
+        this.casheringNumber = casheringNumber;
+        this.status = status;
+    }
+
     public Order(String orderNumber, String scheduleNumber) {
         this.orderNumber = orderNumber;
         this.casheringNumber = casheringNumber;

@@ -6,17 +6,17 @@ import java.util.Date;
 public class Cashering {
     private int id;
 
-    private LocalDateTime date;
+    private String date;
 
     private String operationNumber;
 
     private String userNumber;
 
-    private LocalDateTime openAt;
+    private String openAt;
 
-    private LocalDateTime closeAt;
+    private String closeAt;
 
-    public Cashering (LocalDateTime date, String operationNumber) {
+    public Cashering (String date, String operationNumber) {
         this.date = date;
         this.operationNumber = operationNumber;
     }
@@ -24,7 +24,7 @@ public class Cashering {
     public Cashering() {
     }
 
-    public Cashering(int id, LocalDateTime date, String operationNumber, String userNumber, LocalDateTime openAt, LocalDateTime closeAt) {
+    public Cashering(int id, String date, String operationNumber, String userNumber, String openAt, String closeAt) {
         this.id = id;
         this.date = date;
         this.operationNumber = operationNumber;
@@ -41,11 +41,11 @@ public class Cashering {
         this.id = id;
     }
 
-    public LocalDateTime getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -65,19 +65,19 @@ public class Cashering {
         this.userNumber = userNumber;
     }
 
-    public LocalDateTime getOpenAt() {
+    public String getOpenAt() {
         return openAt;
     }
 
-    public void setOpenAt(LocalDateTime openAt) {
+    public void setOpenAt(String openAt) {
         this.openAt = openAt;
     }
 
-    public LocalDateTime getCloseAt() {
+    public String getCloseAt() {
         return closeAt;
     }
 
-    public void setCloseAt(LocalDateTime closeAt) {
+    public void setCloseAt(String closeAt) {
         this.closeAt = closeAt;
     }
 }

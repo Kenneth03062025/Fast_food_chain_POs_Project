@@ -5,6 +5,7 @@ import com.app.controller.ItemController;
 import com.app.controller.StockController;
 import com.app.model.Item;
 import com.app.model.Stocks;
+import com.app.model.dto.CasheringItemResponse;
 import com.app.model.dto.ListOfItemsResponse;
 import com.app.model.dto.ListOfStocksResponse;
 
@@ -21,7 +22,7 @@ public class CasheringConsole {
 
     private static String currentCasheringNumber;
 
-    public static void getCasheringStcoks(){
+    public static void getCasheringStocks(){
         ListOfStocksResponse res = StockController.getStocksbyCashering(currentCasheringNumber);
 
         if (res.getStatus().equals("success")) {
@@ -35,7 +36,12 @@ public class CasheringConsole {
     }
 
     public static void getOpenCashering(){
-        CasheringController.createCashering();
+        CasheringItemResponse item = CasheringController.getCreatedCashering();
+        if(item.getStatus().equals("success")){
+            //
+        } else {
+            //
+        }
     }
 
     public static void getActiveItems(){
@@ -66,7 +72,17 @@ public class CasheringConsole {
         System.out.println("    [1] Create New Cashering");
         System.out.println("    [2] Back to dashboard");
         System.out.print("Enter your choice: ");
-        String choice = sc.nextLine();
+        int choice = sc.nextInt();
+        sc.nextLine();
+
+        if(choice==1){
+            //displayCreatedCashering
+        } else if (choice == 2) {
+            //back
+        } else {
+            System.out.println("Invalid");
+            displayCasheringDashboard();
+        }
 
 //        switch (choice) {
 //            case "1":

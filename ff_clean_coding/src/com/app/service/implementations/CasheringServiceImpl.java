@@ -1,6 +1,7 @@
 package com.app.service.implementations;
 
 import com.app.model.*;
+import com.app.model.dto.CasheringItemResponse;
 import com.app.service.interfaces.CasheringService;
 import com.app.util.DBConnection;
 import com.app.util.RiskyFunctionAnyType;
@@ -100,40 +101,40 @@ public class CasheringServiceImpl implements CasheringService {
     }
 
     @Override
-    public Response<?> getOpenCashering() {
+    public CasheringItemResponse getOpenCashering() {
         String query = "SELECT * FROM operations WHERE (openAt is NULL OR closeAt is NULL);" ;
 //        String query = "SELECT * FROM items WHERE id=?";
         DBConnection con = new DBConnection();
         RiskyFunctionAnyType func = () -> {
-            Response<?> res = new Response<>();
             Cashering cashering = new Cashering();
-//            Item it = new Item();
+
             Statement statement;
             ResultSet resultSet;
             statement = con.getConnection().createStatement();
             resultSet =  statement.executeQuery(query);
-
+//            System.out.println("Executed");
+//            System.out.println(resultSet.next());
             while(resultSet.next()){
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
                 int id = resultSet.getInt(1);
                 String operation_no = resultSet.getString(2) ;
-                String date = String.valueOf(LocalDateTime.parse(resultSet.getString(3),formatter));
+                String date = resultSet.getString(3);
                 String user_no = resultSet.getString(4);
                 String openAt = resultSet.getString(5);
                 String closeAt = resultSet.getString(6);
 
-
-//                LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
-
-//                it = new Item(id,item_no,item_name,item_description,price,unit,status);
-//                cashering = new Cashering(id,date,operation_no,user_no,openAt,closeAt);
+                cashering = new Cashering(id,date,operation_no,user_no,openAt,closeAt);
             }
             //preparedStatement.executeUpdate();
-            return res = new Response<>("success","Successfully Fetch Cashering", cashering);
+            Response<Cashering> res = new Response<>("success","Successfully Fetch Cashering", cashering);
+            return res;
         };
-        return tryCatchAnyResponseExecute(con,func);
-//        return null;
+        Response<?> res = tryCatchAnyResponseExecute(con,func);
+        CasheringItemResponse casheringItemResponse = new CasheringItemResponse(res.getStatus(), res.getMessage());
+        if(res.getStatus().equals("success")){
+            casheringItemResponse.setCashering((Cashering) res.getData());
+        }
+        return casheringItemResponse;
     }
 
     @Override

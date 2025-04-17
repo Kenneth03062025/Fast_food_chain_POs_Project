@@ -9,6 +9,7 @@ import com.app.util.DBConnection;
 import com.app.util.RiskyFunctionAnyType;
 
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.sql.ResultSet;
 
 import static com.app.util.FunctionWithTryCatch.tryCatchAnyResponseExecute;
@@ -68,27 +69,14 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public Response<User> logInUserAccount(User logInUser) {
         DBConnection con = new DBConnection();
-        String query1 = "SELECT * from users WHERE user_name = ? AND password = ?";
+        String query1 = "SELECT * from users WHERE user_name = '" + logInUser.getUserName() + "' AND password = '" + logInUser.getPassword() + "'";
         RiskyFunctionAnyType func = () -> {
             Response<User> res = new Response<>();
             //User user = new User();
 
-            PreparedStatement preparedStatement;
-            ResultSet resultSet;
-            preparedStatement = con.getConnection().prepareStatement(query1);
-            preparedStatement.setString(1, logInUser.getUserName());
-            preparedStatement.setString(2, logInUser.getPassword());
-            resultSet =  preparedStatement.executeQuery();
-            System.out.println(resultSet.next());
+            Statement stmt = con.getConnection().createStatement();
+            ResultSet resultSet = stmt.executeQuery(query1);
 
-//            if (!resultSet.next()) {
-//                res.setStatus("failed");
-//                res.setMessage("UserName or Password Incorrect");
-//                return res;
-////                ++attemptCount;
-////                System.out.println("Login Failed. Attempt " + attemptCount + " of " + 3);
-////                continue;
-//            }
 
             while(resultSet.next()){
 //                int id = resultSet.getInt(1);
@@ -97,7 +85,7 @@ public class AuthServiceImpl implements AuthService {
                 String last_name = resultSet.getString(4);
                 String middle_name = resultSet.getString(5);
                 String user_name = resultSet.getString(6);
-                String role = resultSet.getString(7);
+                String role = resultSet.getString(8);
                 System.out.println(user_no);
 
 //                User user = new User(user_no,first_name,last_name,middle_name,user_name,role);

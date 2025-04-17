@@ -80,7 +80,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ListOfOrdersResponse getUnpaidOrders(String casheringNumber) {
-        String query = "SELECT * FROM orders WHERE (status='created' AND cashering_no =?)";
+        String query = "SELECT * FROM orders WHERE cashering_no = '" + casheringNumber +"' AND status='created'";
+//        String query = "SELECT * FROM orders WHERE cashering_no=? ";
         DBConnection con = new DBConnection();
 
         RiskyFunctionAnyType func = () -> {
@@ -89,23 +90,24 @@ public class OrderServiceImpl implements OrderService {
             PreparedStatement preparedStatement;
             ResultSet resultSet;
 
-            preparedStatement = con.getConnection().prepareStatement(query);
-            preparedStatement.setString(1, casheringNumber);
-            resultSet =  preparedStatement.executeQuery();
+//            preparedStatement = con.getConnection().prepareStatement(query);
+//            preparedStatement.setString(1, casheringNumber);
+//            resultSet =  preparedStatement.executeQuery();
 //            System.out.println(resultSet.next());
+            Statement stmt = con.getConnection().createStatement();
+            resultSet = stmt.executeQuery(query);
 
             while (resultSet.next()) {
                 int id = resultSet.getInt(1);
                 String order_no = resultSet.getString(2);
                 String cashering_no = resultSet.getString(3);
-                LocalDateTime placeAt = LocalDateTime.parse(resultSet.getString(4), Constants.formatter);
+//                LocalDateTime placeAt = LocalDateTime.parse(resultSet.getString(4), Constants.formatter);
+//                LocalDateTime placeAt = resultSet.getDate(4);
                 String status = resultSet.getString(5);
-                Order order = new Order(id,order_no,cashering_no,placeAt,status);
-                System.out.println(id);
+                Order order = new Order(id,order_no,cashering_no,status);
 //                Item item = new Item(item_no,item_name,item_description,price,unit);
                 orders.add(order);
             }
-            System.out.println(orders.size());
 
             return res = new Response<>("success","Successfully fetch Orders",orders);
         };

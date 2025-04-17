@@ -19,7 +19,7 @@ import static com.app.util.FunctionWithTryCatch.tryCatchAnyResponseExecute;
 public class StockServiceImpl implements StockService {
     @Override
     public ListOfStocksResponse getStocksbyCashering(String casheringNumber) {
-        String query = "SELECT * FROM stocks WHERE cashering_no";
+        String query = "SELECT * FROM stocks WHERE cashering_no='" + casheringNumber + "'";
         DBConnection con = new DBConnection();
         ListOfStocksResponse resToConsole;
 

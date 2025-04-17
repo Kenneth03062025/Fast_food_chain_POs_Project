@@ -7,6 +7,8 @@ public class OrderItem {
 
     private String itemNumber;
 
+    private String itemName;
+
     private int quantity;
 
     private double itemTotal;
@@ -33,6 +35,15 @@ public class OrderItem {
         this.itemNumber = itemNumber;
         this.quantity = quantity;
         this.itemTotal = itemTotal;
+    }
+
+    public OrderItem(int id, String itemNumber, String itemName, int quantity, double price, double itemTotal) {
+        this.id = id;
+        this.itemNumber = itemNumber;
+        this.itemName = itemName;
+        this.quantity = quantity;
+        this.itemTotal = itemTotal;
+        this.price = price;
     }
 
     public OrderItem(String orderNumber, String itemNumber, int quantity) {
@@ -87,5 +98,13 @@ public class OrderItem {
 
     public void setItemTotal(double itemTotal) {
         this.itemTotal = itemTotal;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 }
