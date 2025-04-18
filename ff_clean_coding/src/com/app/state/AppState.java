@@ -1,12 +1,14 @@
 package com.app.state;
 
-import com.app.model.Item;
-import com.app.model.Order;
-import com.app.model.User;
+import com.app.model.*;
+
+import java.util.List;
 
 public class AppState {
 
-    public static User user = new User();
+    public static Cashering cashering;
+    public static List<Stocks> stocksList;
+    public static User user;
     public static Item item = new Item();
 
     public static Order order = new Order();

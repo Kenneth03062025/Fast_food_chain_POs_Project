@@ -19,7 +19,7 @@ import static com.app.util.FunctionWithTryCatch.tryCatchTransactionalExecute;
 public class CasheringServiceImpl implements CasheringService {
 
     @Override
-    public Response<?> createCashering() {
+    public Response<Cashering> createCashering() {
         String query = "INSERT INTO operations(operationNumber, date)"
                 + "VALUES(?,?)";
         String query2 = "Select identification_prefix,current_number FROM setup WHERE id=?";
@@ -60,13 +60,13 @@ public class CasheringServiceImpl implements CasheringService {
 
             return res;
         };
-        return tryCatchTransactionalExecute(con, func);
+        return (Response<Cashering>) tryCatchTransactionalExecute(con, func);
         //return null;
     }
 
     @Override
-    public Response<?> openCashering(String operationNumber) {
-        String query = "UPDATE operations SET openAt = ? WHERE item_no=?";
+    public Response<Cashering> openCashering(String operationNumber) {
+        String query = "UPDATE operations SET openAt = ? WHERE operationNumber=?";
         DBConnection con = new DBConnection();
         RiskyFunctionAnyType func = () -> {
             Response<?> res = new Response<>();
@@ -78,13 +78,13 @@ public class CasheringServiceImpl implements CasheringService {
             return res = new Response<>("success","Successfully Opened Cashering");
         };
 
-        return tryCatchAnyResponseExecute(con,func);
+        return (Response<Cashering>) tryCatchAnyResponseExecute(con,func);
         //return null;
     }
 
     @Override
-    public Response<?> closeCashering(String operationNumber) {
-        String query = "UPDATE operations SET closeAt = ? WHERE item_no=?";
+    public Response<Cashering> closeCashering(String operationNumber) {
+        String query = "UPDATE operations SET closeAt = ? WHERE operationNumber=?";
         DBConnection con = new DBConnection();
         RiskyFunctionAnyType func = () -> {
             Response<?> res = new Response<>();
@@ -96,7 +96,7 @@ public class CasheringServiceImpl implements CasheringService {
             return res = new Response<>("success","Successfully Closed Cashering");
         };
 
-        return tryCatchAnyResponseExecute(con,func);
+        return (Response<Cashering>) tryCatchAnyResponseExecute(con,func);
         //return null;
     }
 

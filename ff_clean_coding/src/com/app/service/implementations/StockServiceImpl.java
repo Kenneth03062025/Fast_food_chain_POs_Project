@@ -1,30 +1,33 @@
 package com.app.service.implementations;
 
-import com.app.model.Item;
-import com.app.model.Response;
-import com.app.model.Stocks;
+import com.app.model.*;
 import com.app.model.dto.ListOfItemsResponse;
 import com.app.model.dto.ListOfStocksResponse;
 import com.app.service.interfaces.StockService;
 import com.app.util.DBConnection;
 import com.app.util.RiskyFunctionAnyType;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.app.util.FunctionWithTryCatch.tryCatchAnyResponseExecute;
+import static com.app.util.FunctionWithTryCatch.tryCatchTransactionalExecute;
 
 public class StockServiceImpl implements StockService {
     @Override
     public ListOfStocksResponse getStocksbyCashering(String casheringNumber) {
-        String query = "SELECT * FROM stocks WHERE cashering_no='" + casheringNumber + "'";
+        String query = "SELECT stocks.id, stocks.cashering_no, stocks.item_no ,items.item_name," +
+                "stocks.quantity, stocks.items_sold FROM stocks " +
+                "INNER JOIN items ON stocks.item_no=items.item_no " +
+                "WHERE stocks.cashering_no='" + casheringNumber + "'";
         DBConnection con = new DBConnection();
         ListOfStocksResponse resToConsole;
 
         RiskyFunctionAnyType func = () -> {
-            Response<Stocks> res = new Response<>();
+
             List<Stocks> stocks = new ArrayList<>();
             Statement statement;
             ResultSet resultSet;
@@ -42,8 +45,8 @@ public class StockServiceImpl implements StockService {
 //                Item item = new Item(id, item_no, item_name, item_description, price, unit, status);
                 stocks.add(itemStock);
             }
-
-            return res = new Response<>("success", "Successfully fetch Items",stocks);
+            Response<Stocks> res = new Response<>("success", "Successfully fetch Items",stocks);
+            return res;
         };
         Response<?> res = tryCatchAnyResponseExecute(con,func);
         ListOfStocksResponse stocksRes = new ListOfStocksResponse();
@@ -60,5 +63,31 @@ public class StockServiceImpl implements StockService {
         }
 
         return stocksRes;
+    }
+
+    @Override
+    public Response<Stocks> addItemsToCashering(List<Stocks> stocks) {
+        String query = "INSERT INTO stocks (cashering_no,item_no, quantity)"
+                + "VALUES(?,?,?)";
+
+        DBConnection con = new DBConnection();
+
+        RiskyFunctionAnyType func = () -> {
+            Response<Stocks> res = new Response<>();
+
+            PreparedStatement stmt1 = con.getConnection().prepareStatement(query);
+            for ( Stocks ite: stocks) {
+                stmt1.setString(1,ite.getCasheringNumber());
+                stmt1.setString(2,ite.getItemNumber());
+                stmt1.setInt(3,ite.getQuantity());
+                stmt1.executeUpdate();
+            }
+
+            res.setStatus("success");
+            res.setMessage("Successfully Saved Stocks to Cashering");
+            return res;
+        };
+        return (Response<Stocks>) tryCatchTransactionalExecute(con, func);
+//        return null;
     }
 }
