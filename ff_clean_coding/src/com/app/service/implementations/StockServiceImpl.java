@@ -37,9 +37,10 @@ public class StockServiceImpl implements StockService {
                 int id = resultSet.getInt(1);
                 String cashering_no = resultSet.getString(2);
                 String item_no = resultSet.getString(3);
-                int quantity = resultSet.getInt(4);
-                int items_sold = resultSet.getInt(5);
-                Stocks itemStock = new Stocks(id,cashering_no,item_no,quantity, items_sold);
+                String item_name = resultSet.getString(4);
+                int quantity = resultSet.getInt(5);
+                int items_sold = resultSet.getInt(6);
+                Stocks itemStock = new Stocks(id,cashering_no,item_no,item_name,quantity, items_sold);
 //                String unit = resultSet.getString(6);
 //                String status = resultSet.getString(7);
 //                Item item = new Item(id, item_no, item_name, item_description, price, unit, status);

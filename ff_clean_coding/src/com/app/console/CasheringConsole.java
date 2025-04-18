@@ -33,6 +33,7 @@ public class CasheringConsole {
 
     public static void getCasheringStocks(){
         ListOfStocksResponse res = StockController.getStocksbyCashering(currentCasheringNumber);
+        System.out.println(res.getMessage());
 
         if (res.getStatus().equals("success")) {
             casheringStocks = res.getStocks();
