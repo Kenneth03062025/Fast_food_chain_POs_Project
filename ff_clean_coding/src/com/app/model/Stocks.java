@@ -14,12 +14,11 @@ public class Stocks {
 
     private int itemSold;
 
-    public Stocks(int id, String casheringNumber, String itemNumber, int quantity, int itemSold) {
-        this.id = id;
+    public Stocks(String casheringNumber, String itemNumber, String itemName , int quantity) {
         this.casheringNumber = casheringNumber;
         this.itemNumber = itemNumber;
         this.quantity = quantity;
-        this.itemSold = itemSold;
+        this.itemName = itemName;
     }
 
     public Stocks(int id, String casheringNumber, String itemNumber, String itemName, int quantity, int itemSold) {
@@ -36,6 +35,7 @@ public class Stocks {
         this.itemNumber = itemNumber;
         this.quantity = quantity;
     }
+
 
     public int getId() {
         return id;

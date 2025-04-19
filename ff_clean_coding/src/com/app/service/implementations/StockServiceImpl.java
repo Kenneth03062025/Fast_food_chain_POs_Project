@@ -1,7 +1,6 @@
 package com.app.service.implementations;
 
 import com.app.model.*;
-import com.app.model.dto.ListOfItemsResponse;
 import com.app.model.dto.ListOfStocksResponse;
 import com.app.service.interfaces.StockService;
 import com.app.util.DBConnection;

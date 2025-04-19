@@ -27,6 +27,8 @@ public class CasheringConsole {
 
     private static Cashering currentCashering;
 
+    private static List<Stocks> temporaryList = new ArrayList<>();
+
     public static void init(){
         getCreatedCashering();
     }
@@ -38,13 +40,11 @@ public class CasheringConsole {
         if (res.getStatus().equals("success")) {
             casheringStocks = res.getStocks();
             AppState.stocksList = casheringStocks;
-//            displayAllItem();
             displayStocks();
         } else {
             displayErrorConsole();
         }
 
-//        StockController.getStocksbyCashering(currentCasheringNumber);
     }
 
     public static void getCreatedCashering(){
@@ -79,16 +79,30 @@ public class CasheringConsole {
         }
     }
 
+    public static void addItemToTemporaryList(Stocks stocks){
+        temporaryList.add(stocks);
+    }
+
+    public static void updateItem(Stocks stocks, Stocks newStocks){
+        int index = temporaryList.indexOf(stocks);
+        temporaryList.set(index,newStocks);
+    }
+
+    public static void deleteItem(Stocks stocks){
+        int index = temporaryList.indexOf(stocks);
+        temporaryList.remove(stocks);
+    }
+
     public static void addItemsToCashering(){
-        List<Stocks> stocksList = new ArrayList<>();
-//        CSH-1009
-        Stocks stocks1 = new Stocks("CSH-1009","ITM-1021",20);
-        Stocks stocks2 = new Stocks("CSH-1009","ITM-1024",10);
-        stocksList.add(stocks1);
-        stocksList.add(stocks2);
-        Response<Stocks> res = StockController.addItemsToCashering(stocksList);
+        Response<Stocks> res = StockController.addItemsToCashering(temporaryList);
         System.out.println(res.getStatus());
         System.out.println(res.getMessage());
+        if(res.getStatus().equals("success")){
+            displayCasheringDashboard();
+        } else {
+            displayErrorConsole();
+        }
+
     }
     public static void createCashering(){
         Response<Cashering> res = CasheringController.createCashering();
@@ -240,11 +254,67 @@ public class CasheringConsole {
 
     public static void displayStocks(){
         System.out.printf("\n%-5s %-15s %-30s %-10s %-10s\n", "Id", "Item Number", "Item Name","Quantity", "Items Sold");
-        for ( Stocks row: casheringStocks ) {
-            System.out.printf("\n%-5s %-15s %-30s %-10s %-10s\n", row.getId(), row.getItemNumber(), row.getItemName(), row.getQuantity(), row.getItemSold());
+        if(casheringStocks.size() > 0){
+            for ( Stocks row: casheringStocks ) {
+                System.out.printf("\n%-5s %-15s %-30s %-10s %-10s\n", row.getId(), row.getItemNumber(), row.getItemName(), row.getQuantity(), row.getItemSold());
+            }
+            displayStockListOptions();
+        } else {
+            System.out.println("");
+//            displayEmptyStockList();
+            //bulky add
         }
+    }
+
+    public static void displayTemporaryListItem(){
+        System.out.printf("\n%-5s %-15s %-30s %-10s\n", "", "Item Number", "Item Name","Quantity");
+        for ( Stocks row: temporaryList ) {
+            System.out.printf("\n%-5s %-15s %-30s %-10s\n", "", row.getItemNumber(), row.getItemName(), row.getQuantity());
+        }
+        System.out.println(" ");
+
+        System.out.println("    [1] Add Item Stocks");
+        System.out.println("    [2] Update Item Quantity");
+        System.out.println("    [3] Remove Item");
+        System.out.println("    [4] Save this to Cashering Stocks");
+        System.out.println("    [5] Back");
+
+        System.out.print("Enter your choice: ");
+        int choice = sc.nextInt();
+        sc.nextLine();
+
+
+        switch (choice){
+            case 1 :
+                getActiveItems();
+            break;
+            case  2:
+                displayChangeQuantity();
+                //System.out.println("Update Item Quantity");
+                break;
+            case 3:
+                displayRemoveItem();
+                break;
+            case 4:
+                addItemsToCashering();
+            default:
+                displayCasheringDashboard();
+//                System.out.println("Back Options");
+
+        }
+    }
+
+    public static void displayStockListOptions(){
+
+        System.out.println(" ");
+//        System.out.println("    [1] Add Item Stocks");
+//        System.out.println("    [2] Update Item Quantity");
+//        System.out.println("    [3] Remove Item");
+        System.out.println("    Press Enter to Return");
+        sc.nextLine();
 
     }
+
 
     public static void displayActiveItems() {
         int selectedNumber;
@@ -252,31 +322,74 @@ public class CasheringConsole {
         for ( Item itm: activeItems ) {
             System.out.println(" [" + (activeItems.indexOf(itm) + 1) + "] " + itm.getItem_no() + " " + itm.getItem_name());
         }
-//        System.out.println( " [" + (items.size() + 1) + "] " + "Create New Item");
-//        System.out.println(" [" + (items.size() + 2) + "] " + "Exit");
+
         System.out.print("Select an option: ");
         selectedNumber = sc.nextInt();
         sc.nextLine();
 
-//        if(selectedNumber <= 0 || selectedNumber > items.size() + 2){
-//            System.out.println("Invalid Input");
-//            return;
-//        }
-//
-//        if(selectedNumber < items.size() + 1){
-//            selectedItem = items.get(selectedNumber-1);
-//            displayAnItemOptions();
-//            return;
-//        }
-//
-//        if(selectedNumber == items.size() + 1){
-//            displayCreateForm();
-//            return;
-//        }
-//
-//        if(selectedNumber == items.size() + 2 ){
-//            System.out.println("Exit");
-//            return;
-//        }
+        //2. Get the Item from list
+        Item selectedItem = activeItems.get(selectedNumber-1);
+
+        System.out.print("Enter Quantity: ");
+        int quantity = sc.nextInt();
+        sc.nextLine();
+
+        //3. Create Stock Object
+        Stocks stockItem = new Stocks(currentCasheringNumber,selectedItem.getItem_no(),selectedItem.getItem_name(),quantity);
+
+        //4 Add to temporary List
+        addItemToTemporaryList(stockItem);
+        displayTemporaryListItem();
+    }
+
+    public static void displayChangeQuantity(){
+        System.out.printf("\n%-5s %-15s %-30s %-10s\n", "Index", "Item Number", "Item Name","Quantity");
+        for ( Stocks row: temporaryList ) {
+            System.out.printf("\n%-5s %-15s %-30s %-10s\n", temporaryList.indexOf(row)+1, row.getItemNumber(), row.getItemName(), row.getQuantity());
+        }
+        System.out.printf("\n%-5s %-15s\n",temporaryList.size()+1,"Back");
+        System.out.println(" ");
+
+        System.out.print("Enter your choice: ");
+        int choice = sc.nextInt();
+        sc.nextLine();
+
+        if(choice == temporaryList.size()+1){
+            displayTemporaryListItem();
+            return;
+        }
+
+        if(choice <= temporaryList.size()){
+            System.out.print("Enter new Quantity: ");
+            int quantity = sc.nextInt();
+            Stocks selectedStocks = temporaryList.get(choice-1);
+            selectedStocks.setQuantity(quantity);
+            updateItem(temporaryList.get(choice-1),selectedStocks);
+            sc.nextLine();
+        }
+        displayTemporaryListItem();
+    }
+
+    public static void displayRemoveItem(){
+        System.out.printf("\n%-5s %-15s %-30s %-10s\n", "Index", "Item Number", "Item Name","Quantity");
+        for ( Stocks row: temporaryList ) {
+            System.out.printf("\n%-5s %-15s %-30s %-10s\n", temporaryList.indexOf(row)+1, row.getItemNumber(), row.getItemName(), row.getQuantity());
+        }
+        System.out.printf("\n%-5s %-15s\n",temporaryList.size()+1,"Back");
+        System.out.println(" ");
+
+        System.out.print("Enter your choice: ");
+        int choice = sc.nextInt();
+        sc.nextLine();
+
+        if(choice == temporaryList.size()+1){
+            displayTemporaryListItem();
+            return;
+        }
+
+        if(choice <= temporaryList.size()){
+            deleteItem(temporaryList.get(choice-1));
+        }
+        displayTemporaryListItem();
     }
 }
