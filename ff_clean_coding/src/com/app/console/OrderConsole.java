@@ -2,12 +2,12 @@ package com.app.console;
 
 import com.app.controller.OrderController;
 import com.app.controller.OrderItemController;
-import com.app.model.Item;
-import com.app.model.Order;
-import com.app.model.OrderItem;
-import com.app.model.Response;
+import com.app.controller.StockController;
+import com.app.model.*;
+import com.app.model.dto.ListOfItemsAvailableResponse;
 import com.app.model.dto.ListOfOrderItemsResponse;
 import com.app.model.dto.ListOfOrdersResponse;
+import com.app.state.AppState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +24,8 @@ public class OrderConsole {
     static OrderItem orderItems;
 
     static List<OrderItem> orderItemList;
+
+    static List<ItemAvailable> availables;
 
     private static Scanner sc = new Scanner(System.in);
 
@@ -112,15 +114,25 @@ public class OrderConsole {
     }
 
     public static void getUnpaidOrders(){
-        ListOfOrdersResponse res = OrderController.getUnpaidOrders("CSH-1001");
-
-        orderList = res.getOrders();
+        ListOfOrdersResponse res = OrderController.getUnpaidOrders(AppState.cashering.getOperationNumber());
 
         if(res.getStatus().equals("success")){
+            orderList = res.getOrders();
             displayUnpaidOrders();
         } else {
             System.out.println("Error");
         }
+    }
+
+    public static void getAvailableStocks(){
+        ListOfItemsAvailableResponse res = StockController.getAvailableItems(AppState.cashering.getOperationNumber());
+        if(res.getStatus().equals("success")){
+            availables = res.getItemsAvailable();
+            displayAvailableStocks();
+        } else {
+            System.out.println("Error");
+        }
+
     }
 
     public static void getOrderItems(){
@@ -187,6 +199,10 @@ public class OrderConsole {
 
         System.out.println("Order Total: " + orderTotal);
 //        System.out.println();
+    }
+
+    public static void displayAvailableStocks(){
+
     }
 
 }

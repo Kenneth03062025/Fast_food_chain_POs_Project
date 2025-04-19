@@ -15,31 +15,5 @@ public class Main {
 
         AppMain.execute();
 
-//        ItemController.showItems();
-//    ItemController.updateAnItem();
-//    ItemController.showAnItem();
-//    ItemController.deleteAnItem();
-//    ItemController.setItemStatus();
-
-
-//        ItemConsole.showAnItem();
-//        ItemConsole.showAllItems();
-//        ItemConsole.createItem();
-//
-//        OrderController.createOrder();
-
-//        Payment payment = new Payment("ORD-1013",405.55);
-//
-//        Response<String> res =  PaymentController.savePayment(payment);
-//        System.out.println(res.getStatus());
-
-
-
-
-//        OperationController.createOpration();
-
-
-//        SetupServiceImpl stp = new SetupServiceImpl();
-//        stp.showSetup();
     }
 }

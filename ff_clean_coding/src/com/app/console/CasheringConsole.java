@@ -35,7 +35,7 @@ public class CasheringConsole {
 
     public static void getCasheringStocks(){
         ListOfStocksResponse res = StockController.getStocksbyCashering(currentCasheringNumber);
-        System.out.println(res.getMessage());
+//        System.out.println(res.getMessage());
 
         if (res.getStatus().equals("success")) {
             casheringStocks = res.getStocks();
@@ -98,7 +98,8 @@ public class CasheringConsole {
         System.out.println(res.getStatus());
         System.out.println(res.getMessage());
         if(res.getStatus().equals("success")){
-            displayCasheringDashboard();
+            temporaryList.clear();
+            displayCreatedCashering();
         } else {
             displayErrorConsole();
         }
@@ -149,7 +150,7 @@ public class CasheringConsole {
         if(choice==1){
             createCashering();
         } else if (choice == 2) {
-            //back
+            //back Go to DashBoard
         } else {
             System.out.println("Invalid");
             displayCasheringDashboard();
@@ -258,9 +259,11 @@ public class CasheringConsole {
             for ( Stocks row: casheringStocks ) {
                 System.out.printf("\n%-5s %-15s %-30s %-10s %-10s\n", row.getId(), row.getItemNumber(), row.getItemName(), row.getQuantity(), row.getItemSold());
             }
-            displayStockListOptions();
+//            displayStockListOptions();
         } else {
-            System.out.println("");
+            System.out.println("  ");
+            System.out.println("Empty Stocks");
+            displayStockListOptions();
 //            displayEmptyStockList();
             //bulky add
         }
@@ -307,11 +310,24 @@ public class CasheringConsole {
     public static void displayStockListOptions(){
 
         System.out.println(" ");
-//        System.out.println("    [1] Add Item Stocks");
-//        System.out.println("    [2] Update Item Quantity");
+        System.out.println("    [1] Add Item Stocks");
+        System.out.println("    [2] Back");
 //        System.out.println("    [3] Remove Item");
-        System.out.println("    Press Enter to Return");
+//        System.out.println("    Press Enter to Return");
+        System.out.print("Enter your choice: ");
+        int choice = sc.nextInt();
         sc.nextLine();
+
+        switch (choice){
+            case 1:
+                displayTemporaryListItem();
+                break;
+            case 2:
+                displayCasheringOptions();
+                break;
+            default:
+                displayStockListOptions();
+        }
 
     }
 
