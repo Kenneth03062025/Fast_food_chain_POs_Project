@@ -34,7 +34,10 @@ public class ItemConsole {
 
         if (res.getStatus().equals("success")) {
             items = res.getItems();
-            displayAllItem();
+            if(AppState.user.getRole().equals("admin")){
+                displayAllItem();
+            }
+            disAllItemCashier();
         } else {
             displayErrorConsole();
         }
@@ -120,6 +123,37 @@ public class ItemConsole {
             return;
         }
 
+    }
+
+    public static void disAllItemCashier(){
+        int selectedNumber;
+
+        for ( Item itm: items ) {
+            System.out.println(" [" + (items.indexOf(itm) + 1) + "] " + itm.getItem_no() + " " + itm.getItem_name());
+        }
+
+        System.out.println(" [" + (items.size() + 1) + "] " + "Exit");
+        System.out.print("Select an option: ");
+        selectedNumber = sc.nextInt();
+        sc.nextLine();
+
+        if(selectedNumber <= 0 || selectedNumber > items.size() + 1){
+            System.out.println("Invalid Input");
+            disAllItemCashier();
+            return;
+        }
+
+        if(selectedNumber < items.size() + 1){
+            selectedItem = items.get(selectedNumber-1);
+            displayAnItemOptions();
+            return;
+        }
+
+        if(selectedNumber == items.size() + 1 ){
+            System.out.println("Exit");
+            DashBoard.init();
+            return;
+        }
     }
 
     public static Item displayForm(){
