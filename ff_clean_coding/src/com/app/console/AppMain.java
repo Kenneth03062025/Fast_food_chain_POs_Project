@@ -7,8 +7,10 @@ import com.app.controller.OrderItemController;
 public class AppMain {
     public static void execute() {
 
+//        OrderConsole.creatOrder();
+
 //        CasheringConsole.addItemsToCashering();
-        CasheringConsole.init();
+//        CasheringConsole.init();
 //        CasheringConsole.getActiveItems();
 //        CasheringConsole.getActiveItems();
 
@@ -18,8 +20,13 @@ public class AppMain {
 
 //        OrderConsole.getUnpaidOrders();
 //        OrderConsole.creatOrder();
+        OrderConsole.init();
 //        CasheringConsole.displayStocks();
 //        ItemConsole.getAllItem();
+
+//        AuthConsole.displayCreateUserForm();
+//        AuthConsole.displayAuthMain();
+//        AuthConsole.exitProgram();
 
 //        AuthConsole.displayLogInForm();
 //        AuthConsole.displayCreateUserForm();

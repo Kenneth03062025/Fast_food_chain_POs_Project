@@ -10,13 +10,25 @@ public class AuthConsole {
 
     static Scanner sc = new Scanner(System.in);
 
+    static final String reset = "\033[0m";
+    static final String bold = "\033[1m";
+    static final String underline = "\033[4m";
+    static final String red = "\033[31m";
+    static final String green = "\033[32m";
+    static final String yellow = "\033[33m";
+    static final String blue = "\033[34m";
+    static final String cyan = "\033[36m";
+    static final String magenta = "\033[35m";
+
+
     public static void getLogInUser(User logInUser){
         Response<User> res = AuthController.logInUser(logInUser);
         if(res.getStatus().equals("success")){
             //System.out.println(res.getData());
-            System.out.println("Dashboard");
+            DashBoard.init();
         } else{
             displayAuthFailed(res.getStatus(), res.getMessage());
+            displayLogInForm();
         }
     }
 
@@ -24,28 +36,53 @@ public class AuthConsole {
         Response<?> res = AuthController.createUser(newUser);
         if(res.getStatus().equals("success")){
             System.out.println(res.getDataString());
-            System.out.println("LogIn");
+//            System.out.println("LogIn");
             displayLogInForm();
         } else{
-            displayAuthFailed(res.getStatus(), res.getMessage());
+//            displayAuthFailed(res.getStatus(), res.getMessage());
+            displayCreateUserForm();
         }
     }
 
     public static void displayCreateUserForm(){
-        System.out.println("\nCreate account");
-        System.out.print("Enter your firstname: ");
+
+        System.out.println(blue+"*=======================*");
+        System.out.println(blue+"*    Create account     *");
+        System.out.println(blue+"*=======================*");
+        System.out.print(blue+"*Enter your firstname:");
         String firstName = sc.nextLine();
-        System.out.print("Enter your lastname: ");
+
+        System.out.print(blue+"*Enter your lastname:");
         String lastName = sc.nextLine();
-        System.out.print("Enter your middle name: ");
+
+        System.out.print(blue+"*Enter your middle name:");
         String middleName = sc.nextLine();
-        System.out.print("Enter your username: ");
+
+        System.out.print(blue+"*Enter your username:");
         String userName = sc.nextLine();
-        System.out.print("Enter your password: ");
+
+        System.out.print(blue+"*Enter your password:");
         String password = sc.nextLine();
+        System.out.println(blue+"*=======================*");
+
 
         User user = new User(firstName,lastName,middleName,userName,password);
         createNewUser(user);
+
+    }
+
+    public static void displayAuthMain(){
+
+
+        System.out.println(cyan + "*=======================*");
+        System.out.println(red + "*       McJabili        *");
+        System.out.println(yellow + "*=======================*" + reset);
+        System.out.println(blue+"*    [1] Create account *");
+        System.out.println(blue+"*    [2] Login          *");
+        System.out.println(blue+"*    [3] Exit           *");
+        System.out.println(blue+"*************************");
+        System.out.print(blue+"Choose a number:");
+        String choice = sc.nextLine();
 
     }
 
@@ -64,5 +101,26 @@ public class AuthConsole {
         System.out.println(message);
 
         displayLogInForm();
+    }
+
+    public static void exitProgram(){
+        System.out.println(blue+ "*=======================*" + reset);
+        System.out.println(blue + "*   Exit application    *");
+        System.out.println(blue+"*=======================*");
+        System.out.println(blue + "*[Y] YES                *");
+        System.out.println(blue+"*"+red + "[N] NO                 "+ blue+"*");
+        System.out.println(blue+"*=======================*");
+        System.out.print("Enter a choice: ");
+        String choice = sc.nextLine();
+        if (choice.equalsIgnoreCase("Yes") || choice.equalsIgnoreCase("y")) {
+            System.out.println("Thank you for using our application");
+            System.exit(0);
+        }
+        if (choice.equalsIgnoreCase("No") || choice.equalsIgnoreCase("n")) {
+            System.out.println("Failed Exit");
+        } else {
+            System.out.println("Invalid! Input the Yes or No");
+            exitProgram();
+        }
     }
 }

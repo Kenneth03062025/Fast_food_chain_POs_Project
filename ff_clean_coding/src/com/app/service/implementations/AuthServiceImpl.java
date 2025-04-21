@@ -40,9 +40,10 @@ public class AuthServiceImpl implements AuthService {
                 int currentNumber = rs.getInt(2);
                 setup = new Setup(prefix,currentNumber);
             }
+            String setUpNewUser = setup.getNewNumber();
 
             PreparedStatement stmt2 = con.getConnection().prepareStatement(query2);
-            stmt2.setString(1,setup.getNewNumber());
+            stmt2.setString(1,setUpNewUser);
             stmt2.setString(2, user.getFirstName());
             stmt2.setString(3, user.getLastName());
             stmt2.setString(4, user.getMiddleName());
@@ -59,7 +60,7 @@ public class AuthServiceImpl implements AuthService {
 
             res.setStatus("success");
             res.setMessage("Successfully Created New User");
-            res.setDataString(setup.getNewNumber());
+            res.setDataString(setUpNewUser);
             return res;
         };
 

@@ -48,8 +48,9 @@ public class DBConnection {
         try {
             System.out.println("Rolling Back...");
             connection.rollback();
+
         } catch (SQLException ex) {
-            System.out.println(ex);
+            System.out.println(ex.getMessage());
         }
     }
 

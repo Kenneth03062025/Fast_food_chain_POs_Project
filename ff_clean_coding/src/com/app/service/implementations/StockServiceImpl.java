@@ -97,7 +97,7 @@ public class StockServiceImpl implements StockService {
                         "(stocks.quantity - (stocks.items_sold + stocks.items_remove)) as available " +
                         "FROM stocks INNER JOIN items ON stocks.item_no=items.item_no " +
                         "WHERE (stocks.quantity - (stocks.items_sold + stocks.items_remove)) > 0 AND " +
-                        "WHERE stocks.cashering_no='" + casheringNumber + "'";
+                        "stocks.cashering_no='" + casheringNumber + "'";
         DBConnection con = new DBConnection();
 
         RiskyFunctionAnyType func = () -> {

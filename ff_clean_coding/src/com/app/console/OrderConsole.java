@@ -2,11 +2,13 @@ package com.app.console;
 
 import com.app.controller.OrderController;
 import com.app.controller.OrderItemController;
+import com.app.controller.PaymentController;
 import com.app.controller.StockController;
 import com.app.model.*;
 import com.app.model.dto.ListOfItemsAvailableResponse;
 import com.app.model.dto.ListOfOrderItemsResponse;
 import com.app.model.dto.ListOfOrdersResponse;
+import com.app.model.dto.PaymentResponse;
 import com.app.state.AppState;
 
 import java.util.ArrayList;
@@ -23,11 +25,34 @@ public class OrderConsole {
 
     static OrderItem orderItems;
 
-    static List<OrderItem> orderItemList;
+    static List<OrderItem> orderItemList = new ArrayList<>();
 
     static List<ItemAvailable> availables;
 
     private static Scanner sc = new Scanner(System.in);
+
+    public static void init(){
+        getAvailableStocks();
+    }
+
+    public static void tryAgain(){
+        System.out.println("Would You Like to Try Again");
+
+        System.out.print("Enter a choice: ");
+        String choice = sc.nextLine();
+        if (choice.equalsIgnoreCase("Yes") || choice.equalsIgnoreCase("y")) {
+            System.out.println("Thank you for using our application");
+            displayOrderOptions();
+            System.exit(0);
+        }
+        if (choice.equalsIgnoreCase("No") || choice.equalsIgnoreCase("n")) {
+            dispose();
+            System.out.println("Failed Exit");
+        } else {
+            System.out.println("Invalid! Input the Yes or No");
+            dispose();
+        }
+    }
 
     public static void creatOrder(){
         ArrayList<OrderItem> ordItems = new ArrayList<>();
@@ -38,13 +63,15 @@ public class OrderConsole {
         ordItems.add(itm2);
         ordItems.add(itm3);
         ordItems.add(itm4);
-        Response<?> res = OrderController.createOrder(ordItems,"CSH-1001");
-        System.out.println(res.getDataString());
+        PaymentResponse res = PaymentController.placeOrderPayment(ordItems,"CSH-1012");
+//        Response<?> res = OrderController.createOrder(ordItems,"CSH-1001");
+        System.out.println(res.getStatus());
+        System.out.println(res.getMessage());
 
 //        ArrayList<String> itemList = new ArrayList<>();
 //        Scanner scanner = new Scanner(System.in);
 //        int choice;
-//
+
 //        do {
 //            System.out.println("\n=== ArrayList CRUD Menu ===");
 //            System.out.println("1. Create (Add Item)");
@@ -113,96 +140,198 @@ public class OrderConsole {
 
     }
 
-    public static void getUnpaidOrders(){
-        ListOfOrdersResponse res = OrderController.getUnpaidOrders(AppState.cashering.getOperationNumber());
-
-        if(res.getStatus().equals("success")){
-            orderList = res.getOrders();
-            displayUnpaidOrders();
-        } else {
-            System.out.println("Error");
-        }
+    public static void addItemToList(OrderItem item){
+        orderItemList.add(item);
     }
+
+    public static void removeItem(int orderIndex){
+        orderItemList.remove(orderIndex);
+    }
+
+    public static void changeQuantity(int index, OrderItem item){
+        orderItemList.set(index,item);
+    }
+
 
     public static void getAvailableStocks(){
-        ListOfItemsAvailableResponse res = StockController.getAvailableItems(AppState.cashering.getOperationNumber());
+        ListOfItemsAvailableResponse res = StockController.getAvailableItems("CSH-1012");
         if(res.getStatus().equals("success")){
             availables = res.getItemsAvailable();
-            displayAvailableStocks();
+            displayOrderOptions();
         } else {
             System.out.println("Error");
         }
-
     }
 
-    public static void getOrderItems(){
-
-        ListOfOrderItemsResponse res = OrderItemController.showOrderItems(selectedOrder.getOrderNumber());
-
-        orderItemList = res.getOrderItems();
-
-        displayOrderItems();
-    }
-
-    public static void displayUnpaidOrders(){
-        int selectedNumber;
-
-        for ( Order itm: orderList ) {
-            System.out.println(" [" + (orderList.indexOf(itm) + 1) + "] " + itm.getOrderNumber() );
-        }
-        System.out.println( " [" + (orderList.size() + 1) + "] " + "Create Order");
-        System.out.println(" [" + (orderList.size() + 2) + "] " + "Exit");
-        System.out.print("Select an option: ");
-        selectedNumber = sc.nextInt();
-        sc.nextLine();
-////        sc.nextLine();
-
-        if(selectedNumber <= 0 || selectedNumber > orderList.size() + 2){
-            System.out.println("Invalid Input");
-            return;
-        }
-
-        if(selectedNumber < orderList.size() + 1){
-            selectedOrder = orderList.get(selectedNumber-1);
-            getOrderItems();
-            return;
-        }
-
-        if(selectedNumber == orderList.size() + 1){
-//            displayCreateForm();
-            System.out.println("Create New Order");
-            return;
-        }
-
-        if(selectedNumber == orderList.size() + 2 ){
-            System.out.println("Exit");
-            return;
-        }
-    }
-
-
-    public static void displayOrderItems(){
-        System.out.println(selectedOrder.getOrderNumber() +"    -----------   " + selectedOrder.getStatus());
-        double orderTotal = 0;
+//    public static void getOrderItems(){
+//
+//        ListOfOrderItemsResponse res = OrderItemController.showOrderItems(selectedOrder.getOrderNumber());
+//
+//        orderItemList = res.getOrderItems();
+//
+//        displayOrderItems();
+//    }
+//
+//    public static void displayUnpaidOrders(){
+//        int selectedNumber;
+//
+//        for ( Order itm: orderList ) {
+//            System.out.println(" [" + (orderList.indexOf(itm) + 1) + "] " + itm.getOrderNumber() );
+//        }
+//        System.out.println( " [" + (orderList.size() + 1) + "] " + "Create Order");
+//        System.out.println(" [" + (orderList.size() + 2) + "] " + "Exit");
+//        System.out.print("Select an option: ");
+//        selectedNumber = sc.nextInt();
+//        sc.nextLine();
+//////        sc.nextLine();
+//
+//        if(selectedNumber <= 0 || selectedNumber > orderList.size() + 2){
+//            System.out.println("Invalid Input");
+//            return;
+//        }
+//
+//        if(selectedNumber < orderList.size() + 1){
+//            selectedOrder = orderList.get(selectedNumber-1);
+//            getOrderItems();
+//            return;
+//        }
+//
+//        if(selectedNumber == orderList.size() + 1){
+////            displayCreateForm();
+//            System.out.println("Create New Order");
+//            return;
+//        }
+//
+//        if(selectedNumber == orderList.size() + 2 ){
+//            System.out.println("Exit");
+//            return;
+//        }
+//    }
 
 
-
-        for (OrderItem oi: orderItemList) {
-            System.out.println(oi.getItemNumber()+ "   " + oi.getItemName()+ "   " + oi.getQuantity() + " @  " + oi.getPrice()+ "  =  " + oi.getItemTotal());
-            orderTotal = orderTotal + oi.getItemTotal();
-
-        }
-
-//        System.out.println("ITM-1011" + " Sisig Meal" + "5 @ 95 = 475");
-//        System.out.println("ITM-1011" + " Sisig Meal" + "5 @ 95 = 475");
-//        System.out.println("ITM-1011" + " Sisig Meal" + "5 @ 95 = 475");
-
-        System.out.println("Order Total: " + orderTotal);
-//        System.out.println();
-    }
+//    public static void displayOrderItems(){
+//        System.out.println(selectedOrder.getOrderNumber() +"    -----------   " + selectedOrder.getStatus());
+//        double orderTotal = 0;
+//
+//
+//
+//        for (OrderItem oi: orderItemList) {
+//            System.out.println(oi.getItemNumber()+ "   " + oi.getItemName()+ "   " + oi.getQuantity() + " @  " + oi.getPrice()+ "  =  " + oi.getItemTotal());
+//            orderTotal = orderTotal + oi.getItemTotal();
+//
+//        }
+//
+////        System.out.println("ITM-1011" + " Sisig Meal" + "5 @ 95 = 475");
+////        System.out.println("ITM-1011" + " Sisig Meal" + "5 @ 95 = 475");
+////        System.out.println("ITM-1011" + " Sisig Meal" + "5 @ 95 = 475");
+//
+//        System.out.println("Order Total: " + orderTotal);
+////        System.out.println();
+//    }
 
     public static void displayAvailableStocks(){
+        System.out.printf("\n%-5s %-15s %-30s %-10s %-10s\n", "Id", "Item Number", "Item Name","Price", "Items Sold");
+        if(availables.size() > 0) {
+            for (ItemAvailable row : availables) {
+                System.out.printf("\n%-5s %-15s %-30s %-10s %-10s\n", availables.indexOf(row)+1 , row.getItemNumber(), row.getItemName(), row.getPrice() ,row.getAvailable());
+            }
+
+        } else {
+            System.out.println("No Available Stocks");
+        }
+    }
+
+    public static void displayOrderOptions(){
+        displayAvailableStocks();
+        System.out.println("  ");
+        System.out.println("  ");
+        System.out.println(" [ 1. ]  Create Order");
+        System.out.println(" [ 2. ]  Exit");
+
+        System.out.println("Enter Your Choice");
+
+
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice){
+                case 1: //create order
+                    displayTemporaryList();
+                    break;
+                case 2:
+                    dispose();
+                    break;
+                case 3:
+                    System.out.println("Invalid Input");
+                    displayOrderOptions();
+            }
+
+
+
+
 
     }
+
+
+    public static void displayTemporaryList(){
+
+        if(orderItemList.size() > 0) {
+            System.out.println("Your Item Selected");
+            System.out.println("");
+            System.out.printf("\n%-5s %-15s %-30s %-10s %-10s\n", " ", "Item Number", "Item Name","Quantity", "Items Sold");
+            for (OrderItem row : orderItemList) {
+                System.out.printf("\n%-5s %-15s %-30s %-10s %-10s\n", orderItemList.indexOf(row), row.getItemNumber(), row.getItemName(), row.getPrice());
+            }
+        } else {
+            System.out.println("No Items on This List");
+        }
+        displayAvailableStocks();
+        System.out.println("Select Item to Add to List: ");
+        int choice = sc.nextInt();
+        sc.nextLine();
+        OrderItem item = new OrderItem();
+
+//        addItemToList();
+    }
+
+    public static void dispose(){
+        //close the scanner
+        sc.close();
+        DashBoard.init();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //    public static void getUnpaidOrders(){
+//        ListOfOrdersResponse res = OrderController.getUnpaidOrders(AppState.cashering.getOperationNumber());
+//
+//        if(res.getStatus().equals("success")){
+//            orderList = res.getOrders();
+//            displayUnpaidOrders();
+//        } else {
+//            System.out.println("Error");
+//        }
+//    }
 
 }
