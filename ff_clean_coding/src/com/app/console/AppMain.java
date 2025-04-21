@@ -20,11 +20,11 @@ public class AppMain {
 
 //        OrderConsole.getUnpaidOrders();
 //        OrderConsole.creatOrder();
-        OrderConsole.init();
+//        OrderConsole.init();
 //        CasheringConsole.displayStocks();
 //        ItemConsole.getAllItem();
 
-//        AuthConsole.displayCreateUserForm();
+        AuthConsole.displayCreateUserForm();
 //        AuthConsole.displayAuthMain();
 //        AuthConsole.exitProgram();
 

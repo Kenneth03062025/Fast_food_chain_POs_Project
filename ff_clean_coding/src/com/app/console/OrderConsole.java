@@ -289,7 +289,18 @@ public class OrderConsole {
         System.out.println("Select Item to Add to List: ");
         int choice = sc.nextInt();
         sc.nextLine();
-        OrderItem item = new OrderItem();
+//        OrderItem item = new OrderItem();
+
+        if(choice < availables.size()) {
+            //get the item
+            ItemAvailable selected = availables.get(choice-1);
+
+            //initiate the OrderItem
+//            OrderItem item1 = new OrderItem(selected.getItemNumber(),);
+//            item1.setItemName();
+
+            //add the item to list
+        }
 
 //        addItemToList();
     }
