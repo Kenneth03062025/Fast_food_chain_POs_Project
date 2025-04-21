@@ -40,7 +40,8 @@ public class AuthConsole {
             displayLogInForm();
         } else{
 //            displayAuthFailed(res.getStatus(), res.getMessage());
-            displayCreateUserForm();
+            System.out.println("User Creation Failed");
+            displayAuthMain();
         }
     }
 
@@ -82,7 +83,23 @@ public class AuthConsole {
         System.out.println(blue+"*    [3] Exit           *");
         System.out.println(blue+"*************************");
         System.out.print(blue+"Choose a number:");
-        String choice = sc.nextLine();
+        int choice = sc.nextInt();
+        sc.nextLine();
+
+       switch (choice){
+           case 1:
+               displayCreateUserForm();
+               break;
+           case 2:
+               displayLogInForm();
+               break;
+           case 3:
+               exitProgram();
+           default:
+               System.out.println("Invalid Input");
+               displayAuthMain();
+       }
+
 
     }
 

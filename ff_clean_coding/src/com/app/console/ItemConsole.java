@@ -10,6 +10,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ItemConsole {
+
+    static final String reset = "\033[0m";
+    static final String bold = "\033[1m";
+    static final String underline = "\033[4m";
+    static final String red = "\033[31m";
+    static final String green = "\033[32m";
+    static final String yellow = "\033[33m";
+    static final String blue = "\033[34m";
+    static final String cyan = "\033[36m";
+    static final String magenta = "\033[35m";
     static List<Item> items = new ArrayList<>();
     static Item selectedItem = new Item();
 
@@ -60,6 +70,7 @@ public class ItemConsole {
         //deleteAnItem();
         Response<?> res = ItemController.deleteAnItem(itemNumber);
         if (res.getStatus().equals("success")) {
+            System.out.println(res.getMessage());
             getAllItem();
         } else {
             displayErrorConsole();
@@ -86,6 +97,7 @@ public class ItemConsole {
 
         if(selectedNumber <= 0 || selectedNumber > items.size() + 2){
             System.out.println("Invalid Input");
+            displayAllItem();
             return;
         }
 
@@ -102,6 +114,7 @@ public class ItemConsole {
 
         if(selectedNumber == items.size() + 2 ){
             System.out.println("Exit");
+            DashBoard.init();
             return;
         }
 
@@ -157,7 +170,7 @@ public class ItemConsole {
         switch(selectedNumber){
             case 1 : displayItemUpdateForm();
             case 2 : setItemStatus(selectedItem.getItem_no(),inverseStatus);
-            case 3 : deleteAnItem(selectedItem.getItem_no());
+            case 3 : displayConfirmDelete();
             case 4 : getAllItem();
             default:
                 System.out.println("Invalid Input");
@@ -170,11 +183,30 @@ public class ItemConsole {
         updateAnItem(selectedItem.getItem_no(),item);
     }
 
+    public static void displayConfirmDelete(){
 
 
-//    public void showAnIten(){
-//        ItemController.showAnItem();
-//    }
+        System.out.println(blue+ "*=======================*" + reset);
+        System.out.println(blue + "*   Delete this Item?   *");
+        System.out.println(blue+"*=======================*");
+        System.out.println(blue + "*[Y] YES                *");
+        System.out.println(blue+"*"+red + "[N] NO                 "+ blue+"*");
+        System.out.println(blue+"*=======================*");
+        System.out.print("Enter a choice: ");
+        String choice = sc.nextLine();
+        if (choice.equalsIgnoreCase("Yes") || choice.equalsIgnoreCase("y")) {
+            deleteAnItem(selectedItem.getItem_no());
+
+        }
+        if (choice.equalsIgnoreCase("No") || choice.equalsIgnoreCase("n")) {
+            displayAllItem();
+        } else {
+            System.out.println("Invalid! Input the Yes or No");
+            displayConfirmDelete();
+        }
+
+    }
+
 
 
 }

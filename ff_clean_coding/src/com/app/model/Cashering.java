@@ -24,8 +24,16 @@ public class Cashering {
     public Cashering() {
     }
 
-    public Cashering(int id, String date, String operationNumber, String userNumber, String openAt, String closeAt) {
+    public Cashering(int id , String operationNumber, String date, String userNumber, String openAt, String closeAt) {
         this.id = id;
+        this.date = date;
+        this.operationNumber = operationNumber;
+        this.userNumber = userNumber;
+        this.openAt = openAt;
+        this.closeAt = closeAt;
+    }
+
+    public Cashering(String operationNumber, String date, String userNumber, String openAt, String closeAt) {
         this.date = date;
         this.operationNumber = operationNumber;
         this.userNumber = userNumber;

@@ -50,11 +50,13 @@ public class CasheringConsole {
     public static void getCreatedCashering(){
         CasheringItemResponse item = CasheringController.getCreatedCashering();
         System.out.println(item.getStatus());
+        System.out.println(item.getCashering().getOperationNumber());
 
         if(item.getStatus().equals("success")){
             //
             if(item.getCashering().getOperationNumber() == null){
                 displayCasheringDashboard();
+                return;
             }
             currentCasheringNumber = item.getCashering().getOperationNumber();
             currentCashering = item.getCashering();
@@ -107,8 +109,10 @@ public class CasheringConsole {
     }
     public static void createCashering(){
         Response<Cashering> res = CasheringController.createCashering();
+//        System.out.println(res.getData().getOperationNumber());
+        currentCashering = res.getData();
         if(res.getStatus().equals("success")){
-            displayCasheringOptions();
+            getCreatedCashering();
         } else {
             displayErrorConsole();
             displayCasheringDashboard();
@@ -170,7 +174,7 @@ public class CasheringConsole {
             displayCasheringOptions();
         } else if (choice == 2) {
             //back
-            System.out.println("Back to Dashboard");
+            DashBoard.init();
         } else {
             System.out.println("Invalid");
             displayCreatedCashering();
@@ -179,7 +183,7 @@ public class CasheringConsole {
     }
 
     public static void displayCasheringOptions(){
-        System.out.println("  " + currentCasheringNumber + "  ");
+//        System.out.println("  " + currentCasheringNumber + "  ");
         if(currentCashering.getOpenAt() == null){
              System.out.print("Created but not yet Open");
         } else {

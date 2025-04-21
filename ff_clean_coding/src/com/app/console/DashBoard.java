@@ -20,25 +20,32 @@ public class DashBoard {
     static final String cyan = "\033[36m";
     static final String magenta = "\033[35m";
 
+
     public static void init(){
-        displayDashboard();
-//        CasheringItemResponse item = CasheringController.getCreatedCashering();
+
+
+        CasheringItemResponse item = CasheringController.getCreatedCashering();
 //        System.out.println(item.getStatus());
-//
+//        System.out.println(item.getCashering().getOperationNumber());
+//        System.out.println(item.getCashering().getCloseAt());
+
+        AppState.cashering = item.getCashering();
+        System.out.println(AppState.cashering.getOperationNumber() + " From App State");
+        System.out.println(AppState.cashering.getOpenAt());
+
 //        if(item.getStatus().equals("success")){
 //            //
-//            if(item.getCashering().getOperationNumber() == null){
-//                displayCasheringDashboard();
-//            }
-//            currentCasheringNumber = item.getCashering().getOperationNumber();
-//            currentCashering = item.getCashering();
+//
 //            AppState.cashering = item.getCashering();
 //
-//            displayCreatedCashering();
+//
 //        } else {
 //            //
 //            displayCasheringDashboard();
 //        }
+
+        displayDashboard();
+
     }
 
     public static void displayDashboard(){
@@ -54,15 +61,42 @@ public class DashBoard {
 
         switch(selectedNumber){
             case 1 : ItemConsole.getAllItem();
+                break;
             case 2 :
                 System.out.println("Cashering");
+                CasheringConsole.init();
+                break;
             case 3 :
                 System.out.println("Orders");
-            case 4 :
-                System.out.println("Payments");
+                OrderConsole.init();
+                break;
+            case 4:
+                logout();
+
+                break;
             default:
                 System.out.println("Invalid Input");
         }
-        sc.close();
+
+    }
+
+    private static void logout() {
+        System.out.println();
+        System.out.println(cyan + "=====================================================");
+        System.out.println("         Are you sure you want to logout?     ");
+        System.out.println("=====================================================" + reset);
+        System.out.println("[y] YES");
+        System.out.println("[N] NO");
+        String accountSignOff = sc.nextLine();
+        if (accountSignOff.equalsIgnoreCase("Yes") || accountSignOff.equalsIgnoreCase("y")) {
+//            sc.close();
+            AuthConsole.displayAuthMain();
+        }
+        if (accountSignOff.equalsIgnoreCase("No") || accountSignOff.equalsIgnoreCase("n")) {
+            displayDashboard();
+        } else {
+            System.out.println("Invalid!");
+            logout();
+        }
     }
 }

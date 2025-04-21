@@ -72,9 +72,9 @@ public class ItemController {
     }
 
     public static Response<?> setItemStatus(String itemNumber, String status){
-        Response<?> res = new Response<>();
+//        Response<?> res = new Response<>();
         ItemServiceImpl itm = new ItemServiceImpl();
-        res = itm.setItemStatus(itemNumber,status);
+        Response<?> res = itm.setItemStatus(itemNumber,status);
         System.out.println(res.getStatus());
         System.out.println(res.getMessage());
         return res;

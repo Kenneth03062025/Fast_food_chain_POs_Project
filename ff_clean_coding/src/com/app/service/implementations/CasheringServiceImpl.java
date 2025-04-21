@@ -28,7 +28,7 @@ public class CasheringServiceImpl implements CasheringService {
         DBConnection con = new DBConnection();
 
         RiskyFunctionAnyType func = () -> {
-            Response<Item> res = new Response<>();
+            Response<Cashering> res = new Response<>();
             Setup setup = null;
 
             PreparedStatement stmt1;
@@ -44,9 +44,11 @@ public class CasheringServiceImpl implements CasheringService {
             }
 
             PreparedStatement stmt2;
+            String newNum =  setup.getNewNumber();
+            String dateSTR = LocalDateTime.now().toString();
             stmt2 = con.getConnection().prepareStatement(query);
-            stmt2.setString(1,setup.getNewNumber());
-            stmt2.setString(2, LocalDateTime.now().toString());
+            stmt2.setString(1,newNum);
+            stmt2.setString(2, dateSTR);
             stmt2.executeUpdate();
 
             PreparedStatement stmt3 = con.getConnection().prepareStatement(query3);
@@ -54,8 +56,11 @@ public class CasheringServiceImpl implements CasheringService {
             stmt3.setInt(2,setupId);
             stmt3.executeUpdate();
 
+            Cashering createdCashering = new Cashering(newNum,dateSTR);
+
             res.setStatus("success");
             res.setMessage("Successfully Opened Operation");
+            res.setData(createdCashering);
             res.setDataString(setup.getNewNumber());
 
             return res;
@@ -112,8 +117,7 @@ public class CasheringServiceImpl implements CasheringService {
             ResultSet resultSet;
             statement = con.getConnection().createStatement();
             resultSet =  statement.executeQuery(query);
-//            System.out.println("Executed");
-//            System.out.println(resultSet.next());
+
             while(resultSet.next()){
 
                 int id = resultSet.getInt(1);
@@ -123,8 +127,10 @@ public class CasheringServiceImpl implements CasheringService {
                 String openAt = resultSet.getString(5);
                 String closeAt = resultSet.getString(6);
 
-                cashering = new Cashering(id,date,operation_no,user_no,openAt,closeAt);
+//                cashering = new Cashering(id,date,operation_no,user_no,openAt,closeAt);
+                cashering = new Cashering(operation_no,date,user_no,openAt,closeAt);
             }
+
             //preparedStatement.executeUpdate();
             Response<Cashering> res = new Response<>("success","Successfully Fetch Cashering", cashering);
             return res;

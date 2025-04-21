@@ -214,7 +214,7 @@ public class ItemServiceImpl implements ItemService {
             Response<?> res = new Response<>();
             PreparedStatement preparedStatement;
             preparedStatement = con.getConnection().prepareStatement(query);
-            preparedStatement.setString(1, "ITM-1002");
+            preparedStatement.setString(1, itemNumber);
             preparedStatement.executeUpdate();
             return res = new Response<>("success","Successfully Deleted an Item");
         };

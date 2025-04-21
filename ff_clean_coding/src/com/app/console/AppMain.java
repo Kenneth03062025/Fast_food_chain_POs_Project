@@ -24,8 +24,8 @@ public class AppMain {
 //        CasheringConsole.displayStocks();
 //        ItemConsole.getAllItem();
 
-        AuthConsole.displayCreateUserForm();
-//        AuthConsole.displayAuthMain();
+//        AuthConsole.displayCreateUserForm();
+        AuthConsole.displayAuthMain();
 //        AuthConsole.exitProgram();
 
 //        AuthConsole.displayLogInForm();

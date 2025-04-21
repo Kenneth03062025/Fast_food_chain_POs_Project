@@ -13,7 +13,7 @@ public class CasheringController {
     public static Response<Cashering> createCashering(){
         Response<Cashering> res;
         res = cImpl.createCashering();
-        System.out.println(res.getStatus());
+//        System.out.println(res.getStatus());
         return res;
     }
 
@@ -31,6 +31,7 @@ public class CasheringController {
 
     public static CasheringItemResponse getCreatedCashering(){
         CasheringItemResponse res = cImpl.getOpenCashering();
+        System.out.println(res.getCashering().getOperationNumber());
         return res;
     }
 

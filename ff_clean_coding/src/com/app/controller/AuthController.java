@@ -19,11 +19,11 @@ public class AuthController {
 
     public static Response<User> logInUser(User logInUser){
         Response<User> res = aImpl.logInUserAccount(logInUser);
-        System.out.println(res.getStatus());
+//        System.out.println(res.getStatus());
         //System.out.println(res.getData().getUserName());
         authUser = res.getData();
 //        res.getData();
-        System.out.println(authUser.getRole());
+//        System.out.println(authUser.getRole());
         return res;
     }
 }
