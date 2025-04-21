@@ -69,10 +69,11 @@ public class OrderConsole {
         displayListOptions();
     }
 
-    public static void removeItem(int orderIndex){
-        OrderItem item = orderItemList.get(orderIndex);
+    public static void removeItem(OrderItem item){
+
         orderItemList.remove(item);
         displayListOptions();
+
     }
 
     public static void changeQuantity(int index, OrderItem item){
@@ -173,6 +174,8 @@ public class OrderConsole {
                 displayRemoveItem();
             case 4:
                 displayConfirmatoryPayment();
+            case    5:
+                displayOrderOptions();
             default:
                 displayListOptions();
         }
@@ -241,8 +244,9 @@ public class OrderConsole {
         sc.nextLine();
 
 
-        if(choice < orderItemList.size()){
-            removeItem(choice-1);
+        if(choice <= orderItemList.size()){
+            OrderItem item = orderItemList.get(choice-1);
+            removeItem(item);
 
         } else {
             System.out.println("Invalid Item");
@@ -280,7 +284,7 @@ public class OrderConsole {
 
     public static void dispose(){
         //close the scanner
-        sc.close();
+//        sc.close();
         DashBoard.init();
     }
 

@@ -132,6 +132,7 @@ public class CasheringConsole {
     public static void closeCashering(){
         Response<Cashering> res = CasheringController.closeCashering(currentCasheringNumber);
         if(res.getStatus().equals("success")){
+            AppState.cashering = null;
             displayCasheringDashboard();
         } else {
             displayErrorConsole();
@@ -154,6 +155,7 @@ public class CasheringConsole {
         if(choice==1){
             createCashering();
         } else if (choice == 2) {
+            DashBoard.init();
             //back Go to DashBoard
         } else {
             System.out.println("Invalid");

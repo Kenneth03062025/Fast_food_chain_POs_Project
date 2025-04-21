@@ -30,8 +30,14 @@ public class DashBoard {
 //        System.out.println(item.getCashering().getCloseAt());
 
         AppState.cashering = item.getCashering();
-        System.out.println(AppState.cashering.getOperationNumber() + " From App State");
-        System.out.println(AppState.cashering.getOpenAt());
+        System.out.println(AppState.user.getUserNumber() + " from App State");
+        System.out.println(AppState.user.getRole() + " from App State");
+
+        if(AppState.cashering.getOpenAt() == null){
+            displayUnopenCasheringDashbord();
+        } else {
+            displayDashboard();
+        }
 
 //        if(item.getStatus().equals("success")){
 //            //
@@ -78,6 +84,31 @@ public class DashBoard {
                 System.out.println("Invalid Input");
         }
 
+    }
+
+    public static void displayUnopenCasheringDashbord(){
+        int  selectedNumber;
+
+        System.out.println(blue + "What do you want?");
+        System.out.println(blue +"    [1] Items");
+        System.out.println(blue +"    [2] Casherings");
+        System.out.println(blue +"    [3] Logout");
+        selectedNumber = sc.nextInt();
+        sc.nextLine();
+
+        switch(selectedNumber){
+            case 1 : ItemConsole.getAllItem();
+                break;
+            case 2 :
+                System.out.println("Cashering");
+                CasheringConsole.init();
+                break;
+            case 3:
+                logout();
+                break;
+            default:
+                System.out.println("Invalid Input");
+        }
     }
 
     private static void logout() {

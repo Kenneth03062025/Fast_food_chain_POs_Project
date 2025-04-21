@@ -4,6 +4,7 @@ import com.app.controller.ItemController;
 import com.app.model.Item;
 import com.app.model.Response;
 import com.app.model.dto.ListOfItemsResponse;
+import com.app.state.AppState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +90,7 @@ public class ItemConsole {
         for ( Item itm: items ) {
             System.out.println(" [" + (items.indexOf(itm) + 1) + "] " + itm.getItem_no() + " " + itm.getItem_name());
         }
+
         System.out.println( " [" + (items.size() + 1) + "] " + "Create New Item");
         System.out.println(" [" + (items.size() + 2) + "] " + "Exit");
         System.out.print("Select an option: ");
@@ -158,22 +160,33 @@ public class ItemConsole {
     public static void displayAnItemOptions(){
         displayAnItem();
         int selectedNumber;
-        System.out.println( " [ 1 ] " + "Update this Item");
-        System.out.println( " [ 2 ] " + ((selectedItem.getStatus().equals("inactive")) ? "Set this Active" : "Deactivate This Item"));
-        System.out.println( " [ 3 ] " + "Delete this Item");
-        System.out.println( " [ 4 ] " + "Back");
-        System.out.print("Select an option: ");
-        selectedNumber = sc.nextInt();
-        sc.nextLine();
-        String inverseStatus = selectedItem.getStatus().equals("active") ? "inactive" : "active";
 
-        switch(selectedNumber){
-            case 1 : displayItemUpdateForm();
-            case 2 : setItemStatus(selectedItem.getItem_no(),inverseStatus);
-            case 3 : displayConfirmDelete();
-            case 4 : getAllItem();
-            default:
-                System.out.println("Invalid Input");
+        if(AppState.user.getRole().equals("admin")) {
+            System.out.println(" [ 1 ] " + "Update this Item");
+            System.out.println(" [ 2 ] " + ((selectedItem.getStatus().equals("inactive")) ? "Set this Active" : "Deactivate This Item"));
+            System.out.println(" [ 3 ] " + "Delete this Item");
+            System.out.println(" [ 4 ] " + "Back");
+            System.out.print("Select an option: ");
+            selectedNumber = sc.nextInt();
+            sc.nextLine();
+            String inverseStatus = selectedItem.getStatus().equals("active") ? "inactive" : "active";
+
+            switch (selectedNumber) {
+                case 1:
+                    displayItemUpdateForm();
+                case 2:
+                    setItemStatus(selectedItem.getItem_no(), inverseStatus);
+                case 3:
+                    displayConfirmDelete();
+                case 4:
+                    getAllItem();
+                default:
+                    System.out.println("Invalid Input");
+            }
+        } else {
+            System.out.println("Press Any Key Enter to Go Back");
+            sc.nextLine();
+            getAllItem();
         }
     }
 

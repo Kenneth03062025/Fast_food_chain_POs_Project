@@ -62,7 +62,43 @@ public class OrderServiceImpl implements OrderService {
                 stmt3.setDouble(4,ite.getQuantity()*ite.getPrice());
                 stmt3.addBatch();
                 stmt3.executeUpdate();
+
+//                String itemSum = "SELECT stocks.cashering_no, stocks.item_no, order_items.order_no, SUM(order_items.quantity) from stocks " +
+//                                "INNER JOIN order_items on stocks.item_no=order_items.item_no WHERE " +
+//                        "(stocks.cashering_no ='" + casheringNumber + "' AND stocks.item_no='" + ite.getItemNumber() + "')";
+//
+//
+//                Statement sumStmt = con.getConnection().createStatement();
+//                ResultSet rsSum = sumStmt.executeQuery(itemSum);
+//
+//                if(rsSum.next()){
+//                    int sumQuantity = rsSum.getInt(4);
+//                    System.out.println(sumQuantity);
+//                    String updateStocks = "UPDATE stocks set items_sold=? WHERE item_no='?' AND cashering_no='?'";
+//                    PreparedStatement stockUpdate = con.getConnection().prepareStatement(updateStocks);
+//                    stockUpdate.setInt(1,sumQuantity);
+//                    stockUpdate.setString(2,ite.getItemNumber());
+//                    stockUpdate.setString(3,casheringNumber);
+//                    stmt3.addBatch();
+//                    stmt3.executeUpdate();
+//                }
+//                rsSum.close();
+
             }
+
+//            String itemSum = "SELECT stocks.cashering_no, stocks.item_no, order_items.order_no, SUM(order_items.quantity) from stocks " +
+//                                "INNER JOIN order_items on stocks.item_no=order_items.item_no WHERE " +
+//                        "(stocks.cashering_no =? AND stocks.item_no=?)";
+//            PreparedStatement sumQuantity = con.getConnection().prepareStatement(itemSum);
+//
+//            for (OrderItem ite: orderItems) {
+//                ResultSet rsSum = sumQuantity.executeQuery(itemSum);
+//                sumQuantity.setString(1,casheringNumber);
+//                sumQuantity.setString(2,ite.getItemNumber());
+////                stmt3.setInt(3,ite.getQuantity());
+//                sumQuantity.addBatch();
+//                System.out.println(rsSum);
+//            }
 
             PreparedStatement stmt4 = con.getConnection().prepareStatement(query4);
             stmt4.setInt(1,setup.getNextCurrentNumber());

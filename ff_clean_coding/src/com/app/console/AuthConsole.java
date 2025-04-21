@@ -3,6 +3,7 @@ package com.app.console;
 import com.app.controller.AuthController;
 import com.app.model.Response;
 import com.app.model.User;
+import com.app.state.AppState;
 
 import java.util.Scanner;
 
@@ -23,6 +24,9 @@ public class AuthConsole {
 
     public static void getLogInUser(User logInUser){
         Response<User> res = AuthController.logInUser(logInUser);
+//        System.out.println(res.getData().getUserName());
+//        System.out.println(res.getData().getRole());
+        AppState.user = res.getData();
         if(res.getStatus().equals("success")){
             //System.out.println(res.getData());
             DashBoard.init();
@@ -37,7 +41,8 @@ public class AuthConsole {
         if(res.getStatus().equals("success")){
             System.out.println(res.getDataString());
 //            System.out.println("LogIn");
-            displayLogInForm();
+//            displayLogInForm();
+            createAgain();
         } else{
 //            displayAuthFailed(res.getStatus(), res.getMessage());
             System.out.println("User Creation Failed");
@@ -120,6 +125,28 @@ public class AuthConsole {
         displayLogInForm();
     }
 
+    public static void createAgain(){
+        System.out.println(blue+ "*=======================*" + reset);
+        System.out.println(blue + "*   Create User Again?    *");
+        System.out.println(blue+"*=======================*");
+        System.out.println(blue + "*[Y] YES                *");
+        System.out.println(blue+"*"+red + "[N] NO                 "+ blue+"*");
+        System.out.println(blue+"*=======================*");
+        System.out.print("Enter a choice: ");
+        String choice = sc.nextLine();
+        if (choice.equalsIgnoreCase("Yes") || choice.equalsIgnoreCase("y")) {
+            displayCreateUserForm();
+            System.exit(0);
+        }
+        if (choice.equalsIgnoreCase("No") || choice.equalsIgnoreCase("n")) {
+            displayAuthMain();
+//            System.out.println("Failed Exit");
+        } else {
+            System.out.println("Invalid! Input the Yes or No");
+            exitProgram();
+        }
+    }
+
     public static void exitProgram(){
         System.out.println(blue+ "*=======================*" + reset);
         System.out.println(blue + "*   Exit application    *");
@@ -134,7 +161,8 @@ public class AuthConsole {
             System.exit(0);
         }
         if (choice.equalsIgnoreCase("No") || choice.equalsIgnoreCase("n")) {
-            System.out.println("Failed Exit");
+            displayAuthMain();
+//            System.out.println("Failed Exit");
         } else {
             System.out.println("Invalid! Input the Yes or No");
             exitProgram();
