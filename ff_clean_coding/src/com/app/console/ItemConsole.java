@@ -127,12 +127,20 @@ public class ItemConsole {
 
     public static void disAllItemCashier(){
         int selectedNumber;
-
+        System.out.println(blue+"*===================================================*");
+        System.out.println(blue+"*                      ITEMS                        *");
+        System.out.println(blue+"*===================================================*");
         for ( Item itm: items ) {
-            System.out.println(" [" + (items.indexOf(itm) + 1) + "] " + itm.getItem_no() + " " + itm.getItem_name());
+            String itemLine = String.format("* [%d] %-10s %-34s *",
+                    items.indexOf(itm) + 1,
+                    itm.getItem_no(),
+                    itm.getItem_name());
+            System.out.println(itemLine);
+
         }
 
-        System.out.println(" [" + (items.size() + 1) + "] " + "Exit");
+        System.out.println(     "* [" + (items.size() + 1) + "] " + "Exit                                          *");
+        System.out.println(blue+"*===================================================*");
         System.out.print("Select an option: ");
         selectedNumber = sc.nextInt();
         sc.nextLine();
@@ -183,7 +191,7 @@ public class ItemConsole {
     }
 
     public static void displayAnItem(){
-
+        System.out.println(blue+"ITEMS");
         System.out.println("\n" + selectedItem.getItem_no() + " " + selectedItem.getItem_name());
         System.out.println(selectedItem.getItem_description());
         System.out.printf("At P" + selectedItem.getPrice() + " per " + selectedItem.getUnit() +"\n");

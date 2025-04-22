@@ -85,7 +85,7 @@ public class AuthConsole {
         System.out.println(yellow + "*=======================*" + reset);
         System.out.println(blue+"*    [1] Create account *");
         System.out.println(blue+"*    [2] Login          *");
-        System.out.println(blue+"*    [3] Exit           *");
+        System.out.println(blue+"*    [3]"+red+" Exit"+blue+"           *");
         System.out.println(blue+"*************************");
         System.out.print(blue+"Choose a number:");
         int choice = sc.nextInt();
@@ -109,6 +109,9 @@ public class AuthConsole {
     }
 
     public static void displayLogInForm(){
+        System.out.println(blue+"*=======================*");
+        System.out.println(blue+"*         LOGIN         *");
+        System.out.println(blue+"*=======================*");
         System.out.print("Enter your username: ");
         String userLoginName = sc.nextLine();
         System.out.print("Enter your password: ");
@@ -149,8 +152,8 @@ public class AuthConsole {
 
     public static void exitProgram(){
         System.out.println(blue+ "*=======================*" + reset);
-        System.out.println(blue + "*   Exit application    *");
-        System.out.println(blue+"*=======================*");
+        System.out.println(blue+ "*   Exit application    *");
+        System.out.println(blue+ "*=======================*");
         System.out.println(blue + "*[Y] YES                *");
         System.out.println(blue+"*"+red + "[N] NO                 "+ blue+"*");
         System.out.println(blue+"*=======================*");

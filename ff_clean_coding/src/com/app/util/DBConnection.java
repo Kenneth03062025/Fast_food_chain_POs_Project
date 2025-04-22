@@ -15,9 +15,9 @@ public class DBConnection {
         this.connection = connection;
     }
 
-    private final static String URL = "jdbc:mariadb://localhost:3306/db_ffchain_pos";
+    private final static String URL = "jdbc:mysql://localhost:3306/db_fastfood_chain_pos";
     private final static String USERNAME = "root";
-    private final static String PASSWORD = "root";
+    private final static String PASSWORD = "";
 
     public Connection connection;
 
