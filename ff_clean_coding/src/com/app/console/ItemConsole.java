@@ -29,6 +29,10 @@ public class ItemConsole {
     static Scanner sc = new Scanner(System.in);
 
     //callController or actions
+
+    public static void init(){
+        getAllItem();
+    }
     public static void getAllItem(){
         ListOfItemsResponse res = ItemController.getAllItems();
 
@@ -40,6 +44,7 @@ public class ItemConsole {
             disAllItemCashier();
         } else {
             displayErrorConsole();
+            DashBoard.init();
         }
     }
 
@@ -49,6 +54,7 @@ public class ItemConsole {
             getAllItem();
         } else {
             displayErrorConsole();
+            displayCreateForm();
         }
     }
 
@@ -58,6 +64,7 @@ public class ItemConsole {
             getAllItem();
         } else {
             displayErrorConsole();
+            displayItemUpdateForm();
         }
     }
 
@@ -67,6 +74,7 @@ public class ItemConsole {
             getAllItem();
         } else {
             displayErrorConsole();
+            displayAnItemOptions();
         }
     }
 
@@ -78,6 +86,7 @@ public class ItemConsole {
             getAllItem();
         } else {
             displayErrorConsole();
+            displayAnItemOptions();
         }
     }
 
@@ -122,6 +131,7 @@ public class ItemConsole {
             DashBoard.init();
             return;
         }
+        displayAllItem();
 
     }
 
@@ -162,6 +172,7 @@ public class ItemConsole {
             DashBoard.init();
             return;
         }
+        DashBoard.init();
     }
 
     public static Item displayForm(){

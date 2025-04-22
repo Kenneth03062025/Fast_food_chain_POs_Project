@@ -84,7 +84,7 @@ public class DashBoard {
         sc.nextLine();
 
         switch(selectedNumber){
-            case 1 : ItemConsole.getAllItem();
+            case 1 : ItemConsole.init();
                 break;
             case 2 :
                 System.out.println("Cashering");
@@ -147,7 +147,7 @@ public class DashBoard {
         sc.nextLine();
 
         switch(selectedNumber){
-            case 1 : ItemConsole.getAllItem();
+            case 1 : ItemConsole.init();
                 break;
             case 2 :
                 System.out.println("Cashiering");
