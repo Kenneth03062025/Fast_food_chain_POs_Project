@@ -10,7 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.app.util.FunctionWithTryCatch.tryCatchTransactionalExecute;
 
@@ -149,7 +151,7 @@ public class PaymentServiceImpl implements PaymentService {
                 orderItemStmt.addBatch();
                 orderItemStmt.executeUpdate();
 
-                //Update Stock table
+
             }
 
 
@@ -165,6 +167,36 @@ public class PaymentServiceImpl implements PaymentService {
             placePaymentstmt2.setString(5, "paid");
 
             placePaymentstmt2.executeUpdate();
+            //Update Stock table
+
+            Map<String,Integer> map = new HashMap<>();
+
+
+            for (OrderItem ite: orderItems) {
+                String getItemTotal= "SELECT stocks.cashering_no,stocks.item_no, SUM(order_items.quantity) FROM stocks "+
+                        "INNER JOIN order_items ON stocks.item_no=order_items.item_no " +
+                        "WHERE stocks.cashering_no='" + casheringNumber + "' AND order_items.item_no='" + ite.getItemNumber() +"'";
+                Integer itemTotal = null;
+                Statement itemTotalStmt1 = con.getConnection().createStatement();
+                rs = itemTotalStmt1.executeQuery(getItemTotal);
+                while (rs.next()){
+                    itemTotal = rs.getInt(3);
+                }
+                map.put(ite.getItemNumber(),itemTotal);
+            }
+
+            //Write the rwesult to stock table
+            String updateItemStock = "UPDATE stocks set items_sold=? WHERE item_no=? AND cashering_no=?";
+            PreparedStatement updateItemStmt = con.getConnection().prepareStatement(updateItemStock);
+            for (String key : map.keySet()) {
+                updateItemStmt.setInt(1,map.get(key));
+                updateItemStmt.setString(2,key);
+                updateItemStmt.setString(3,casheringNumber);
+                updateItemStmt.addBatch();
+                updateItemStmt.executeUpdate();
+
+            }
+
 
             //Update SetUp String
             String newnumberUpdate = "UPDATE setup SET current_number = ? WHERE id=?";

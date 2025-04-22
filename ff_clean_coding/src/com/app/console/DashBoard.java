@@ -35,36 +35,51 @@ public class DashBoard {
 
         if(AppState.cashering.getOpenAt() == null){
             displayUnopenCasheringDashbord();
-        } else {
-            displayUnopenCasheringDashbord();
         }
-
-//        if(item.getStatus().equals("success")){
-//            //
-//
-//            AppState.cashering = item.getCashering();
-//
-//
-//        } else {
-//            //
-//            displayCasheringDashboard();
-//        }
-
-        displayUnopenCasheringDashbord();
-
+        displayDashboard();
     }
 
 
 
-   /* public static void displayDashboard(){
+   public static void displayDashboard(){
         int  selectedNumber;
 
-        System.out.println(blue + "What do you want?");
-        System.out.println(blue +"    [1] Items");
-        System.out.println(blue +"    [2] Casherings");
-        System.out.println(blue +"    [3] Orders");
-        System.out.println(blue +"    [4] Logout");
-        System.out.println( blue +"select a number from the list");
+       final String reset = "\033[0m";
+       final String bold = "\033[1m";
+       final String underline = "\033[4m";
+       final String red = "\033[31m";
+       final String green = "\033[32m";
+       final String yellow = "\033[33m";
+       final String blue = "\033[34m";
+       final String cyan = "\033[36m";
+       final String magenta = "\033[35m";
+
+
+       System.out.print("\033[H\033[2J");
+       System.out.flush();
+
+       System.out.println(blue+ "*===================================================*" + reset);
+
+       System.out.println(bold +
+               blue + "*   W   W " + green + " EEEEE " + red + " L     " + cyan + " CCCC  " + magenta + "OOO  " + cyan + " M   M " + red + " EEEEE"+blue+"   *" + reset);
+       System.out.println(bold +
+               blue + "*   W   W " + green + " E     " + red + " L     " + cyan + "C     " + magenta + "O   O " + cyan + " MM MM " + red + " E       "+blue+"*" + reset);
+       System.out.println(bold +
+               blue + "*   W W W " + green + " EEEE  " + red + " L     " + cyan + "C     " + magenta + "O   O " + cyan + " M M M " + red + " EEEE    "+blue+"*" + reset);
+       System.out.println(bold +
+               blue + "*   WW WW " + green + " E     " + red + " L     " + cyan + "C     " + magenta + "O   O " + cyan + " M   M " + red + " E       "+blue+"*" + reset);
+       System.out.println(bold +
+               blue + "*   W   W " + green + " EEEEE " + red + " LLLLL " + cyan + " CCCC " + magenta + " OOO  " + cyan + " M   M " + red + " EEEEE   "+blue+"*" + reset);
+       System.out.println(blue+"*===================================================*");
+       System.out.println(blue+"*                     Dashboard                     *");
+       System.out.println(blue+"*===================================================*");
+       System.out.println(blue+"*    [1] Items                                      *");
+       System.out.println(blue+"*    [2] Cashiering                                 *");
+       System.out.println(blue+"*    [3] Orders                                     *");
+       System.out.println(blue+"*    [4] "+red+"Logout"+blue+"                      *");
+       System.out.println(blue+"*===================================================*");
+       System.out.println(blue+"Enter your choice: ");
+
         selectedNumber = sc.nextInt();
         sc.nextLine();
 
@@ -84,10 +99,10 @@ public class DashBoard {
 
                 break;
             default:
-                System.out.println("Invalid Input");
+                displayDashboard();
         }
 
-    }*/
+    }
 
     public static void displayUnopenCasheringDashbord(){
         int  selectedNumber;

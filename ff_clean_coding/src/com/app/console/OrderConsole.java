@@ -51,7 +51,7 @@ public class OrderConsole {
 
     public static void creatOrder(){
 
-        PaymentResponse res = PaymentController.placeOrderPayment(orderItemList,"CSH-1012");
+        PaymentResponse res = PaymentController.placeOrderPayment(orderItemList,AppState.cashering.getOperationNumber());
 //        Response<?> res = OrderController.createOrder(ordItems,"CSH-1001");
         if(res.getStatus().equals("success")){
             System.out.println("Your Payment Has Place");
