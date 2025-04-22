@@ -145,10 +145,14 @@ public class CasheringConsole {
     }
 
     public static void displayCasheringDashboard(){
-        System.out.println("What do you want? ");
-        System.out.println("    [1] Create New Cashering");
-        System.out.println("    [2] Back to dashboard");
-        System.out.print("Enter your choice: ");
+        final String blue = "\033[34m";
+        System.out.println(blue+"*===================================================*");
+        System.out.println(blue+"*                      Cashiering                   *");
+        System.out.println(blue+"*===================================================*");
+        System.out.println(     "*    [1] Cashiering Options                         *");
+        System.out.println(     "*    [2] Back to dashboard                          *");
+        System.out.println(blue+"*===================================================*");
+        System.out.print(       "Enter your choice: ");
         int choice = sc.nextInt();
         sc.nextLine();
 
@@ -165,10 +169,15 @@ public class CasheringConsole {
     }
 
     public static void displayCreatedCashering(){
-        System.out.println("What do you want? ");
-        System.out.println("    [1] " + currentCasheringNumber);
-        System.out.println("    [2] Back to dashboard");
-        System.out.print("Enter your choice: ");
+        final String blue = "\033[34m";
+        System.out.println(blue+"*===================================================*");
+        System.out.println(blue+"*                      Cashiering                   *");
+        System.out.println(blue+"*===================================================*");
+        String line1 = String.format("*    [1] %-43s*", currentCasheringNumber);
+        System.out.println(line1);
+        System.out.println(     "*    [2] Back to dashboard                          *");
+        System.out.println(blue+"*===================================================*");
+        System.out.print(       "Enter your choice: ");
         int choice = sc.nextInt();
         sc.nextLine();
 
@@ -185,22 +194,27 @@ public class CasheringConsole {
     }
 
     public static void displayCasheringOptions(){
-//        System.out.println("  " + currentCasheringNumber + "  ");
-        if(currentCashering.getOpenAt() == null){
+        final String blue = "\033[34m";
+        System.out.println(blue+"*===================================================*");
+        String line1 = String.format("*                      %-28s *", currentCasheringNumber);
+        System.out.println(line1);
+        System.out.println(blue+"*===================================================*");
+       /* if(currentCashering.getOpenAt() == null){
              System.out.print("Created but not yet Open");
-        } else {
+       } else {
             System.out.print("Created and Open");
-        }
+        }*/
 
-        System.out.println("\n");
-        System.out.println("    [1] View Stocks");
+        System.out.println(     "*    [1] View Stocks                                *");
 
         if(currentCashering.getOpenAt() == null) {
-            System.out.println("    [2] Open Cashering");
+            System.out.println( "*    [2] Open Cashering                             *");
+
         } else {
-            System.out.println("    [2] Close Cashering");
+            System.out.println( "*    [2] Close Cashiering                           *");
         }
-        System.out.println("    [3] Back");
+        System.out.println(     "*    [3] Back                                       *");
+        System.out.println(blue+"*===================================================*");
 
         System.out.print("Enter your choice: ");
         int choice = sc.nextInt();
@@ -226,17 +240,18 @@ public class CasheringConsole {
     }
 
     public static void displayConfirmatoryAction(){
-        System.out.println("Do you to ");
-        if(currentCashering.getOpenAt() == null){
-            System.out.print("Open Cashering");
-        }
-        else {
-            System.out.print("Close Cashering");
-        }
+        final String blue = "\033[34m";
+        String action = (currentCashering.getOpenAt() == null) ? "Open Cashiering" : "Close Cashiering";
 
-        System.out.println("    [1] Yes");
-        System.out.println("    [2] No");
+        String titleLine = String.format("*           Do you want to %s%-22s*", blue, action);
 
+        System.out.println(blue + "*===================================================*");
+        System.out.println(titleLine);
+        System.out.println(blue + "*===================================================*");
+
+        System.out.println(     "*    [1] Yes                                        *");
+        System.out.println(     "*    [2] No                                         *");
+        System.out.println(blue+"*===================================================*");
         System.out.print("Enter your choice: ");
         int choice = sc.nextInt();
         sc.nextLine();
@@ -260,15 +275,27 @@ public class CasheringConsole {
     }
 
     public static void displayStocks(){
-        System.out.printf("\n%-5s %-15s %-30s %-10s %-10s\n", "Id", "Item Number", "Item Name","Quantity", "Items Sold");
-        if(casheringStocks.size() > 0){
-            for ( Stocks row: casheringStocks ) {
-                System.out.printf("\n%-5s %-15s %-30s %-10s %-10s\n", row.getId(), row.getItemNumber(), row.getItemName(), row.getQuantity(), row.getItemSold());
+        System.out.println("╔════╤════════════════╤════════════════════════─────────╤══════════╤══════════╗");
+        System.out.println("║                               STOCK LIST                                    ║");
+        System.out.println("╠════╪════════════════╪════════════════════════─────────╪══════════╪══════════╣");
+        System.out.printf("║ %-3s│ %-12s│ %-29s│ %-9s│ %-9s  ║\n", "Id", "Item Number", "Item Name", "Quantity", "Items Sold");
+        System.out.println("╟────┼────────────────┼─────────────────────────────────┼──────────┼──────────╢");
+
+
+        if (casheringStocks.size() > 0) {
+            for (Stocks row : casheringStocks) {
+                System.out.printf("║  %-3s │ %-12s │ %-29s │ %-9s │ %-9s    ║\n",
+                        row.getId(), row.getItemNumber(), row.getItemName(),
+                        row.getQuantity(), row.getItemSold());
             }
 //            displayStockListOptions();
         } else {
-            System.out.println("  ");
-            System.out.println("Empty Stocks");
+            {
+                System.out.println("║                           Empty Stocks Available                            ║");
+            }
+
+            System.out.println("╚═════════════════════════════════════════════════════════════════════════════╝");
+
             displayStockListOptions();
 //            displayEmptyStockList();
             //bulky add
@@ -276,7 +303,12 @@ public class CasheringConsole {
     }
 
     public static void displayTemporaryListItem(){
-        System.out.printf("\n%-5s %-15s %-30s %-10s\n", "", "Item Number", "Item Name","Quantity");
+        System.out.println("╔════╤════════════════╤════════════════════════─────────╤══════════╤══════════╗");
+        System.out.println("║                          STOCK LIST                                                       ║");
+        System.out.println("╠════╪════════════════╪════════════════════════─────────╪══════════╪══════════╣");
+        System.out.printf("║ %-4s│ %-14s│ %-29s│ %-9s│ %-9s  ║\n", "Id", "Item Number", "Item Name", "Quantity", "Items Sold");
+        System.out.println("╟────┼────────────────┼─────────────────────────────────┼──────────┼──────────╢");
+
         for ( Stocks row: temporaryList ) {
             System.out.printf("\n%-5s %-15s %-30s %-10s\n", "", row.getItemNumber(), row.getItemName(), row.getQuantity());
         }
@@ -316,7 +348,7 @@ public class CasheringConsole {
     public static void displayStockListOptions(){
 
         System.out.println(" ");
-        System.out.println("    [1] Add Item Stocks");
+        System.out.println("    [1] Update Item Stocks");
         System.out.println("    [2] Back");
 //        System.out.println("    [3] Remove Item");
 //        System.out.println("    Press Enter to Return");
