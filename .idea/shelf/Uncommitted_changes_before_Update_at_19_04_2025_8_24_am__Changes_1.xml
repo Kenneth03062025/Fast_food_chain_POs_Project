@@ -1,0 +1,19 @@
+<changelist name="Uncommitted_changes_before_Update_at_19_04_2025_8_24_am_[Changes]1" date="1745022304351" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_04_2025_8_24_am_[Changes]1/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 19/04/2025 8:24 am [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/JavaProject/com/app/service/implementations/StockServiceImpl.class" />
+    <option name="AFTER_PATH" value="out/production/JavaProject/com/app/service/implementations/StockServiceImpl.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_04_2025_8_24_am_[Changes]1/StockServiceImpl.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/JavaProject/com/app/model/Stocks.class" />
+    <option name="AFTER_PATH" value="out/production/JavaProject/com/app/model/Stocks.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_04_2025_8_24_am_[Changes]1/Stocks.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/JavaProject/com/app/console/CasheringConsole.class" />
+    <option name="AFTER_PATH" value="out/production/JavaProject/com/app/console/CasheringConsole.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_04_2025_8_24_am_[Changes]1/CasheringConsole.class" />
+  </binary>
+</changelist>

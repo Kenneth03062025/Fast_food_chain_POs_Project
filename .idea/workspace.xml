@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="decfe5f9-1312-46e5-8996-a1c061b22f4d" name="Changes" comment="Addition of Controllers and implements">
+      <change beforePath="$PROJECT_DIR$/ff_clean_coding/src/com/app/console/CasheringConsole.java" beforeDir="false" afterPath="$PROJECT_DIR$/ff_clean_coding/src/com/app/console/CasheringConsole.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ff_clean_coding/src/com/app/model/Stocks.java" beforeDir="false" afterPath="$PROJECT_DIR$/ff_clean_coding/src/com/app/model/Stocks.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ff_clean_coding/src/com/app/service/implementations/StockServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/ff_clean_coding/src/com/app/service/implementations/StockServiceImpl.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2vnGN1p6IOEVAjPO34DL7mEKr1l" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "D:/JavaProject/ff_clean_coding",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ff_clean_coding" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="decfe5f9-1312-46e5-8996-a1c061b22f4d" name="Changes" comment="" />
+      <created>1744773380337</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1744773380337</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Cashering Starts">
+      <created>1744775110135</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1744775110135</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Cashering Starts">
+      <created>1744775279980</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1744775279980</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Cashering Starts">
+      <created>1744775296379</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1744775296379</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Stock Starts">
+      <created>1744782170468</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1744782170468</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Addition of Controllers and implements">
+      <created>1744863078493</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1744863078495</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Addition of Controllers and implements">
+      <created>1744896703253</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1744896703253</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Addition of Controllers and implements">
+      <created>1744947589333</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1744947589333</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Addition of Controllers and implements">
+      <created>1744947605282</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1744947605282</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Addition of Controllers and implements">
+      <created>1744947615066</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1744947615066</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Addition of Controllers and implements">
+      <created>1744947906868</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1744947906868</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Cashering Starts" />
+    <MESSAGE value="Stock Starts" />
+    <MESSAGE value="Addition of Controllers and implements" />
+    <option name="LAST_COMMIT_MESSAGE" value="Addition of Controllers and implements" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/ff_clean_coding/src/com/app/console/CasheringConsole.java</url>
+          <line>49</line>
+          <properties class="com.app.console.CasheringConsole" method="getCreatedCashering">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
