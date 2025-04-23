@@ -5,6 +5,7 @@ import com.app.model.Item;
 import com.app.model.Response;
 import com.app.model.dto.ListOfItemsResponse;
 import com.app.state.AppState;
+import com.app.util.utilFunctions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,7 +98,7 @@ public class ItemConsole {
     }
     public static void displayAllItem(){
         //Scanner sc = new Scanner(System.in);
-        int selectedNumber;
+//        int selectedNumber;
 
         for ( Item itm: items ) {
             System.out.println(" [" + (items.indexOf(itm) + 1) + "] " + itm.getItem_no() + " " + itm.getItem_name());
@@ -106,8 +107,15 @@ public class ItemConsole {
         System.out.println( " [" + (items.size() + 1) + "] " + "Create New Item");
         System.out.println(" [" + (items.size() + 2) + "] " + "Exit");
         System.out.print("Select an option: ");
-        selectedNumber = sc.nextInt();
-        sc.nextLine();
+
+        String selectedNum = sc.nextLine();
+        Integer selectedNumber = utilFunctions.parseToNumber(selectedNum);
+
+        if(selectedNumber == null){
+            System.out.println("Invalid Input");
+            displayAllItem();
+            return;
+        }
 
         if(selectedNumber <= 0 || selectedNumber > items.size() + 2){
             System.out.println("Invalid Input");
@@ -136,7 +144,7 @@ public class ItemConsole {
     }
 
     public static void disAllItemCashier(){
-        int selectedNumber;
+
         System.out.println(blue+"*===================================================*");
         System.out.println(blue+"*                      ITEMS                        *");
         System.out.println(blue+"*===================================================*");
@@ -152,8 +160,16 @@ public class ItemConsole {
         System.out.println(     "* [" + (items.size() + 1) + "] " + "Exit                                          *");
         System.out.println(blue+"*===================================================*");
         System.out.print("Select an option: ");
-        selectedNumber = sc.nextInt();
-        sc.nextLine();
+
+
+        String selectedNum = sc.nextLine();
+        Integer selectedNumber = utilFunctions.parseToNumber(selectedNum);
+
+        if(selectedNumber == null){
+            System.out.println("Invalid Input");
+            disAllItemCashier();
+            return;
+        }
 
         if(selectedNumber <= 0 || selectedNumber > items.size() + 1){
             System.out.println("Invalid Input");
