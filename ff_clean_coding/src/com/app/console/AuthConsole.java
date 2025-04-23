@@ -4,6 +4,7 @@ import com.app.controller.AuthController;
 import com.app.model.Response;
 import com.app.model.User;
 import com.app.state.AppState;
+import com.app.util.utilFunctions;
 
 import java.util.Scanner;
 
@@ -24,6 +25,11 @@ public class AuthConsole {
 
     public static void getLogInUser(User logInUser){
         Response<User> res = AuthController.logInUser(logInUser);
+        if(res.getData() == null){
+            System.out.println("Invalid Credentials");
+            displayLogInForm();
+            return;
+        }
 //        System.out.println(res.getData().getUserName());
 //        System.out.println(res.getData().getRole());
         AppState.user = res.getData();
@@ -88,8 +94,15 @@ public class AuthConsole {
         System.out.println(blue+"*    [3]"+red+" Exit"+blue+"           *");
         System.out.println(blue+"*************************");
         System.out.print(blue+"Choose a number:");
-        int choice = sc.nextInt();
-        sc.nextLine();
+
+        String selectedNum = sc.nextLine();
+        Integer choice = utilFunctions.parseToNumber(selectedNum);
+
+        if(choice == null){
+            System.out.println("Invalid Input");
+            displayAuthMain();
+            return;
+        }
 
        switch (choice){
            case 1:

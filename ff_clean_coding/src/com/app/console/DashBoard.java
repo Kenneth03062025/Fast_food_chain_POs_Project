@@ -3,6 +3,7 @@ package com.app.console;
 import com.app.controller.CasheringController;
 import com.app.model.dto.CasheringItemResponse;
 import com.app.state.AppState;
+import com.app.util.utilFunctions;
 
 import java.util.Scanner;
 
@@ -80,10 +81,17 @@ public class DashBoard {
        System.out.println(blue+"*===================================================*");
        System.out.println(blue+"Enter your choice: ");
 
-        selectedNumber = sc.nextInt();
-        sc.nextLine();
 
-        switch(selectedNumber){
+       String selectedNum = sc.nextLine();
+       Integer choice = utilFunctions.parseToNumber(selectedNum);
+
+       if(choice == null){
+           System.out.println("Invalid Input");
+           displayDashboard();
+           return;
+       }
+
+        switch(choice){
             case 1 : ItemConsole.init();
                 break;
             case 2 :
@@ -142,11 +150,18 @@ public class DashBoard {
         System.out.println(blue+"*    [3] "+red+"Logout"+blue+"                                     *");
         System.out.println(blue+"*===================================================*");
         System.out.println(blue+"Enter your choice: ");
-        selectedNumber = sc.nextInt();
-;
-        sc.nextLine();
 
-        switch(selectedNumber){
+        String selectedNum = sc.nextLine();
+        Integer choice = utilFunctions.parseToNumber(selectedNum);
+
+        if(choice == null){
+            System.out.println("Invalid Input");
+            displayUnopenCasheringDashbord();
+            return;
+        }
+
+
+        switch(choice){
             case 1 : ItemConsole.init();
                 break;
             case 2 :
@@ -179,7 +194,7 @@ public class DashBoard {
             AuthConsole.displayAuthMain();
         }
         if (accountSignOff.equalsIgnoreCase("No") || accountSignOff.equalsIgnoreCase("n")) {
-            displayUnopenCasheringDashbord();
+            init();
         } else {
             System.out.println("Invalid!");
             logout();

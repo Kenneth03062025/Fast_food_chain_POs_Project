@@ -11,6 +11,7 @@ import com.app.model.dto.CasheringItemResponse;
 import com.app.model.dto.ListOfItemsResponse;
 import com.app.model.dto.ListOfStocksResponse;
 import com.app.state.AppState;
+import com.app.util.utilFunctions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,7 @@ public class CasheringConsole {
             displayStocks();
         } else {
             displayErrorConsole();
+            displayCasheringOptions();
         }
 
     }
@@ -78,6 +80,7 @@ public class CasheringConsole {
 
         } else {
             displayErrorConsole();
+            displayTemporaryListItem();
         }
     }
 
@@ -153,8 +156,16 @@ public class CasheringConsole {
         System.out.println(     "*    [2] Back to dashboard                          *");
         System.out.println(blue+"*===================================================*");
         System.out.print(       "Enter your choice: ");
-        int choice = sc.nextInt();
-        sc.nextLine();
+
+
+        String selectedNum = sc.nextLine();
+        Integer choice = utilFunctions.parseToNumber(selectedNum);
+
+        if(choice == null){
+            System.out.println("Invalid Input");
+            displayCasheringDashboard();
+            return;
+        }
 
         if(choice==1){
             createCashering();
@@ -178,8 +189,17 @@ public class CasheringConsole {
         System.out.println(     "*    [2] Back to dashboard                          *");
         System.out.println(blue+"*===================================================*");
         System.out.print(       "Enter your choice: ");
-        int choice = sc.nextInt();
-        sc.nextLine();
+
+
+        String selectedNum = sc.nextLine();
+        Integer choice = utilFunctions.parseToNumber(selectedNum);
+
+        if(choice == null){
+            System.out.println("Invalid Input");
+            displayCreatedCashering();
+            return;
+        }
+
 
         if(choice==1){
             displayCasheringOptions();
@@ -217,8 +237,16 @@ public class CasheringConsole {
         System.out.println(blue+"*===================================================*");
 
         System.out.print("Enter your choice: ");
-        int choice = sc.nextInt();
-        sc.nextLine();
+
+        String selectedNum = sc.nextLine();
+        Integer choice = utilFunctions.parseToNumber(selectedNum);
+
+        if(choice == null){
+            System.out.println("Invalid Input");
+            displayCasheringOptions();
+            return;
+        }
+
 
         switch (choice){
             case 1:
@@ -233,7 +261,7 @@ public class CasheringConsole {
                 break;
             default:
                 System.out.println("Invalid");
-                displayCasheringDashboard();
+                displayCasheringOptions();
         }
 
 
@@ -253,8 +281,16 @@ public class CasheringConsole {
         System.out.println(     "*    [2] No                                         *");
         System.out.println(blue+"*===================================================*");
         System.out.print("Enter your choice: ");
-        int choice = sc.nextInt();
-        sc.nextLine();
+
+        String selectedNum = sc.nextLine();
+        Integer choice = utilFunctions.parseToNumber(selectedNum);
+
+        if(choice == null){
+            System.out.println("Invalid Input");
+            displayCasheringOptions();
+            return;
+        }
+
 
         switch (choice){
             case 1:
@@ -270,7 +306,7 @@ public class CasheringConsole {
                 break;
             default:
                 System.out.println("Invalid Input");
-                displayCasheringOptions();
+                displayConfirmatoryAction();
         }
     }
 
@@ -321,14 +357,21 @@ public class CasheringConsole {
         System.out.println("    [5] Back");
 
         System.out.print("Enter your choice: ");
-        int choice = sc.nextInt();
-        sc.nextLine();
+
+        String selectedNum = sc.nextLine();
+        Integer choice = utilFunctions.parseToNumber(selectedNum);
+
+        if(choice == null){
+            System.out.println("Invalid Input");
+            displayTemporaryListItem();
+            return;
+        }
 
 
         switch (choice){
             case 1 :
                 getActiveItems();
-            break;
+                break;
             case  2:
                 displayChangeQuantity();
                 //System.out.println("Update Item Quantity");
@@ -338,10 +381,12 @@ public class CasheringConsole {
                 break;
             case 4:
                 addItemsToCashering();
-            default:
+            case 5:
                 displayCasheringDashboard();
+                break;
 //                System.out.println("Back Options");
-
+            default:
+                displayTemporaryListItem();
         }
     }
 
@@ -353,8 +398,15 @@ public class CasheringConsole {
 //        System.out.println("    [3] Remove Item");
 //        System.out.println("    Press Enter to Return");
         System.out.print("Enter your choice: ");
-        int choice = sc.nextInt();
-        sc.nextLine();
+
+        String selectedNum = sc.nextLine();
+        Integer choice = utilFunctions.parseToNumber(selectedNum);
+
+        if(choice == null){
+            System.out.println("Invalid Input");
+            displayStockListOptions();
+            return;
+        }
 
         switch (choice){
             case 1:
@@ -378,11 +430,23 @@ public class CasheringConsole {
         }
 
         System.out.print("Select an option: ");
-        selectedNumber = sc.nextInt();
-        sc.nextLine();
+        String selectedNum = sc.nextLine();
+        Integer choice = utilFunctions.parseToNumber(selectedNum);
+
+        if(choice == null){
+            System.out.println("Invalid Input");
+            displayActiveItems();
+            return;
+        }
+
+        if(choice > activeItems.size() || choice <= 0){
+            System.out.println("Invalid Input");
+            displayActiveItems();
+            return;
+        }
 
         //2. Get the Item from list
-        Item selectedItem = activeItems.get(selectedNumber-1);
+        Item selectedItem = activeItems.get(choice-1);
 
         System.out.print("Enter Quantity: ");
         int quantity = sc.nextInt();

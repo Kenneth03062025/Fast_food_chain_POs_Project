@@ -10,6 +10,7 @@ import com.app.model.dto.ListOfOrderItemsResponse;
 import com.app.model.dto.ListOfOrdersResponse;
 import com.app.model.dto.PaymentResponse;
 import com.app.state.AppState;
+import com.app.util.utilFunctions;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
@@ -89,6 +90,7 @@ public class OrderConsole {
             displayOrderOptions();
         } else {
             System.out.println("Error");
+            DashBoard.init();
         }
     }
 
@@ -109,14 +111,27 @@ public class OrderConsole {
         displayAvailableStocks();
         System.out.println("  ");
         System.out.println("  ");
+
+        if(availables.size() == 0){
+            System.out.println("No Items Available for Cart");
+            System.out.println("Press Enter to Return");
+            sc.nextLine();
+            DashBoard.init();
+        }
         System.out.println(" [ 1. ]  Create Order");
         System.out.println(" [ 2. ]  Exit");
 
         System.out.println("Enter Your Choice");
 
+        String selectedNum = sc.nextLine();
+        Integer choice = utilFunctions.parseToNumber(selectedNum);
 
-            int choice = sc.nextInt();
-            sc.nextLine();
+        if(choice == null){
+            System.out.println("Invalid Input");
+            displayOrderOptions();
+            return;
+        }
+
 
             switch (choice){
                 case 1: //create order
@@ -125,7 +140,7 @@ public class OrderConsole {
                 case 2:
                     dispose();
                     break;
-                case 3:
+                default:
                     System.out.println("Invalid Input");
                     displayOrderOptions();
             }
@@ -160,8 +175,14 @@ public class OrderConsole {
         System.out.println(" [ 4. ]  Proceed to Payment");
         System.out.println(" [ 5. ]  Exit");
 
-        int choice = sc.nextInt();
-        sc.nextLine();
+        String selectedNum = sc.nextLine();
+        Integer choice = utilFunctions.parseToNumber(selectedNum);
+
+        if(choice == null){
+            System.out.println("Invalid Input");
+            displayListOptions();
+            return;
+        }
 
         switch (choice){
             case 1:
@@ -188,14 +209,21 @@ public class OrderConsole {
         System.out.println("  ");
         System.out.println("  ");
         System.out.print("Select Item to Change Quantity: ");
-        int choice = sc.nextInt();
-        sc.nextLine();
+        String selectedNum = sc.nextLine();
+        Integer choice = utilFunctions.parseToNumber(selectedNum);
+
+        if(choice == null){
+            System.out.println("Invalid Input");
+            displayChangeQuntity();
+            return;
+        }
+
         System.out.println("Enter New Quantity");
         int newQuantity = sc.nextInt();
         sc.nextLine();
 
 
-        if(choice < orderItemList.size()){
+        if(choice <= orderItemList.size()){
             OrderItem selected = orderItemList.get(choice-1);
             OrderItem newItem = selected;
             newItem.getItemTotal(selected.getPrice() * newQuantity);
@@ -214,9 +242,22 @@ public class OrderConsole {
         System.out.println("  ");
         System.out.println("  ");
         System.out.print("Select Item to Add to List: ");
-        int choice = sc.nextInt();
-        sc.nextLine();
+
+        String selectedNum = sc.nextLine();
+        Integer choice = utilFunctions.parseToNumber(selectedNum);
+
+        if(choice == null){
+            System.out.println("Invalid Input");
+            displayAddItem();
+            return;
+        }
 //        OrderItem item = new OrderItem();
+        if(choice > availables.size() || choice <=0){
+            System.out.println("Invalid Input");
+            displayAddItem();
+            return;
+        }
+
         System.out.print("\nQuantity: ");
         int quantity = sc.nextInt();
 
@@ -240,8 +281,15 @@ public class OrderConsole {
         System.out.println("  ");
         System.out.println("  ");
         System.out.print("Select Item to Remove: ");
-        int choice = sc.nextInt();
-        sc.nextLine();
+
+        String selectedNum = sc.nextLine();
+        Integer choice = utilFunctions.parseToNumber(selectedNum);
+
+        if(choice == null){
+            System.out.println("Invalid Input");
+            displayRemoveItem();
+            return;
+        }
 
 
         if(choice <= orderItemList.size()){
@@ -277,7 +325,7 @@ public class OrderConsole {
             System.out.println("Failed Exit");
         } else {
             System.out.println("Invalid! Input the Yes or No");
-            displayListOptions();
+            displayConfirmatoryPayment();
 //            exitProgram();
         }
     }
